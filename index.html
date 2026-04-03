@@ -1,0 +1,3706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hayden Lane | Alliance Personnel Network</title>
+  <meta name="description" content="Alliance Personnel Network candidate review terminal for Hayden Lane." />
+  <meta name="theme-color" content="#050d18" />
+  <style>
+    :root {
+      --bg-0: #03060d;
+      --bg-1: #09101d;
+      --bg-2: #0c1626;
+      --panel: rgba(9, 18, 33, 0.78);
+      --panel-strong: rgba(6, 12, 24, 0.9);
+      --panel-soft: rgba(15, 26, 44, 0.66);
+      --line: rgba(143, 201, 255, 0.18);
+      --line-strong: rgba(178, 227, 255, 0.32);
+      --text: #eaf5ff;
+      --muted: #9cb3c9;
+      --cyan: #73d1ff;
+      --cyan-2: #9ee8ff;
+      --blue: #70a4ff;
+      --amber: #ffb463;
+      --amber-2: #ffd5a2;
+      --white: #f8fdff;
+      --danger: #ef7878;
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+      --radius: 22px;
+      --radius-sm: 14px;
+      --cut: 18px;
+      --accent: var(--cyan);
+      --accent-rgb: 115, 209, 255;
+      --accent-soft: rgba(var(--accent-rgb), 0.14);
+      --grid: 34px;
+      --mouse-x: 50%;
+      --mouse-y: 40%;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    html, body { min-height: 100%; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 18% 10%, rgba(86, 127, 255, 0.15), transparent 18%),
+        radial-gradient(circle at 76% 12%, rgba(112, 186, 255, 0.12), transparent 18%),
+        linear-gradient(180deg, var(--bg-2) 0%, var(--bg-0) 100%);
+      color: var(--text);
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at var(--mouse-x) var(--mouse-y), rgba(var(--accent-rgb), 0.11), transparent 18%),
+        radial-gradient(circle at 84% 16%, rgba(255, 255, 255, 0.07), transparent 12%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    body[data-sector="dossiers"] { --accent: var(--amber); --accent-rgb: 255, 180, 99; }
+    body[data-sector="service"] { --accent: #e5f5ff; --accent-rgb: 229, 245, 255; }
+    body[data-sector="systems"] { --accent: #79e4ff; --accent-rgb: 121, 228, 255; }
+    body[data-sector="codex"] { --accent: #a0c2ff; --accent-rgb: 160, 194, 255; }
+    body[data-sector="comms"] { --accent: var(--cyan-2); --accent-rgb: 158, 232, 255; }
+
+    .space,
+    .space::before,
+    .space::after,
+    .stars,
+    .grid,
+    .scanlines,
+    .planet,
+    .ring,
+    .horizon,
+    .fog {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .space { z-index: -3; overflow: hidden; }
+
+    .stars {
+      background-image:
+        radial-gradient(circle at 8% 18%, rgba(255,255,255,.92) 0 1px, transparent 1.2px),
+        radial-gradient(circle at 16% 74%, rgba(255,255,255,.82) 0 1px, transparent 1.15px),
+        radial-gradient(circle at 28% 42%, rgba(255,255,255,.68) 0 .8px, transparent 1px),
+        radial-gradient(circle at 34% 86%, rgba(255,255,255,.72) 0 .9px, transparent 1.1px),
+        radial-gradient(circle at 49% 17%, rgba(255,255,255,.9) 0 .95px, transparent 1.15px),
+        radial-gradient(circle at 57% 62%, rgba(255,255,255,.7) 0 .85px, transparent 1.05px),
+        radial-gradient(circle at 66% 27%, rgba(255,255,255,.86) 0 .9px, transparent 1.1px),
+        radial-gradient(circle at 74% 74%, rgba(255,255,255,.7) 0 .8px, transparent 1px),
+        radial-gradient(circle at 88% 15%, rgba(255,255,255,.95) 0 1.1px, transparent 1.3px),
+        radial-gradient(circle at 91% 56%, rgba(255,255,255,.82) 0 .8px, transparent 1.05px);
+      opacity: .88;
+      animation: drift 26s linear infinite;
+    }
+
+    .planet {
+      inset: auto -10vw auto auto;
+      top: -18vh;
+      width: 62vw;
+      height: 62vw;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 30% 34%, rgba(255,255,255,.28) 0%, rgba(196,229,255,.22) 12%, rgba(92,134,198,.16) 28%, rgba(18,33,55,.16) 46%, rgba(10,16,26,.08) 60%, transparent 68%),
+        radial-gradient(circle at 62% 70%, rgba(66,120,179,.12), transparent 28%);
+      opacity: .68;
+      filter: blur(.2px);
+      box-shadow: inset -90px -90px 140px rgba(4, 8, 16, 0.66);
+    }
+
+    .ring {
+      inset: auto auto auto 48%;
+      top: 7vh;
+      width: 76vw;
+      height: 16vw;
+      border-top: 2px solid rgba(196, 229, 255, 0.14);
+      border-bottom: 2px solid rgba(196, 229, 255, 0.1);
+      border-radius: 50%;
+      transform: rotate(-17deg);
+      opacity: .42;
+      filter: blur(.2px);
+    }
+
+    .ring::before,
+    .ring::after {
+      content: "";
+      position: absolute;
+      inset: 12% 3%;
+      border-top: 1px solid rgba(196, 229, 255, 0.12);
+      border-bottom: 1px solid rgba(196, 229, 255, 0.08);
+      border-radius: 50%;
+    }
+
+    .horizon {
+      background:
+        radial-gradient(120% 44% at 50% 100%, rgba(99, 154, 255, 0.22), transparent 38%),
+        linear-gradient(180deg, transparent 0 66%, rgba(7, 14, 26, .18) 70%, rgba(5, 9, 15, .56) 100%);
+    }
+
+    .fog {
+      background:
+        radial-gradient(circle at 12% 88%, rgba(116, 173, 255, 0.06), transparent 20%),
+        radial-gradient(circle at 86% 92%, rgba(102, 196, 255, 0.07), transparent 22%),
+        linear-gradient(180deg, transparent 0 70%, rgba(5, 9, 15, .22) 80%, rgba(5, 9, 15, .66) 100%);
+    }
+
+    .grid {
+      background-image:
+        linear-gradient(to right, rgba(161, 210, 255, .12) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(161, 210, 255, .08) 1px, transparent 1px);
+      background-size: var(--grid) var(--grid);
+      opacity: .14;
+      mask-image: linear-gradient(180deg, transparent 0%, rgba(0,0,0,.18) 20%, rgba(0,0,0,1) 70%, transparent 100%);
+      transform: perspective(900px) rotateX(74deg) translateY(33vh) scale(1.45);
+      transform-origin: center;
+    }
+
+    .scanlines {
+      background: repeating-linear-gradient(180deg, rgba(255,255,255,.014) 0 1px, transparent 1px 5px);
+      opacity: .38;
+    }
+
+    .hud-bloom {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -2;
+      background:
+        radial-gradient(circle at 75% 18%, rgba(160, 212, 255, 0.16), transparent 14%),
+        linear-gradient(120deg, transparent 0 61%, rgba(255,255,255,.04) 62%, transparent 63% 100%);
+    }
+
+    .is-hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translateY(8px);
+    }
+
+    a, button { font: inherit; }
+
+    .eyebrow {
+      margin: 0 0 .45rem;
+      font-size: .72rem;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .eyebrow.eyebrow--accent { color: var(--accent); }
+    .muted { color: var(--muted); }
+
+    .cut-panel,
+    .dossier-card,
+    .nav-button,
+    .metric,
+    .inline-card,
+    .contact-card,
+    .boot-card {
+      position: relative;
+      clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
+    }
+
+    .cut-panel::before,
+    .dossier-card::before,
+    .metric::before,
+    .inline-card::before,
+    .contact-card::before,
+    .boot-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border: 1px solid var(--line);
+      clip-path: inherit;
+      pointer-events: none;
+    }
+
+    .cut-panel::after,
+    .dossier-card::after,
+    .metric::after,
+    .inline-card::after,
+    .contact-card::after,
+    .boot-card::after {
+      content: "";
+      position: absolute;
+      inset: 1px;
+      background: linear-gradient(135deg, rgba(255,255,255,.06), transparent 26%);
+      clip-path: inherit;
+      pointer-events: none;
+    }
+
+    .cut-panel,
+    .inline-card,
+    .contact-card,
+    .metric,
+    .dossier-card {
+      background: linear-gradient(180deg, rgba(8, 15, 27, .86), rgba(5, 10, 19, .84));
+      backdrop-filter: blur(16px);
+      box-shadow: var(--shadow);
+    }
+
+    .app {
+      min-height: 100vh;
+      padding: 16px;
+      transition: opacity .45s ease, transform .45s ease, visibility .45s ease;
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: 1.2fr auto auto;
+      gap: 14px;
+      align-items: center;
+      padding: 16px 18px;
+      background: linear-gradient(180deg, rgba(7, 13, 23, .9), rgba(5, 10, 18, .86));
+      margin-bottom: 14px;
+    }
+
+    .topbar__title {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .topbar__title strong {
+      font-size: 1.02rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .topbar__status,
+    .topbar__clock {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      min-height: 44px;
+      border-radius: 999px;
+      border: 1px solid rgba(var(--accent-rgb), .18);
+      background: rgba(var(--accent-rgb), .08);
+      white-space: nowrap;
+    }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 14px var(--accent);
+      animation: pulse 2.2s ease-in-out infinite;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 250px minmax(0, 1fr) 340px;
+      gap: 14px;
+      align-items: start;
+    }
+
+    .nav-shell,
+    .sidebar > section {
+      padding: 18px;
+      position: sticky;
+      top: 16px;
+    }
+
+    .nav-shell { background: linear-gradient(180deg, rgba(6, 12, 23, .92), rgba(6, 12, 21, .84)); }
+    .sidebar { display: grid; gap: 14px; }
+
+    .nav-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .brand-glyph {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      position: relative;
+      border: 1px solid rgba(var(--accent-rgb), .32);
+      box-shadow: inset 0 0 20px rgba(var(--accent-rgb), .1), 0 0 24px rgba(var(--accent-rgb), .1);
+    }
+
+    .brand-glyph::before,
+    .brand-glyph::after {
+      content: "";
+      position: absolute;
+      inset: 9px;
+      border: 1px solid rgba(var(--accent-rgb), .28);
+      border-radius: 50%;
+    }
+
+    .brand-glyph::after { inset: 17px; background: radial-gradient(circle, rgba(var(--accent-rgb), .56), transparent 68%); }
+
+    .nav-list { display: grid; gap: 10px; }
+
+    .nav-button {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr) 14px;
+      gap: 12px;
+      align-items: center;
+      padding: 13px 14px;
+      border: 1px solid rgba(0,0,0,0);
+      color: var(--text);
+      background: linear-gradient(180deg, rgba(10, 18, 32, .88), rgba(7, 13, 23, .88));
+      cursor: pointer;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease;
+      text-align: left;
+    }
+
+    .nav-button:hover,
+    .nav-button:focus-visible {
+      outline: none;
+      transform: translateX(4px);
+      border-color: rgba(var(--accent-rgb), .24);
+      background: linear-gradient(180deg, rgba(12, 21, 37, .94), rgba(8, 15, 27, .92));
+      box-shadow: 0 12px 30px rgba(0,0,0,.28), inset 0 0 0 1px rgba(var(--accent-rgb), .08);
+    }
+
+    .nav-button.is-active {
+      border-color: rgba(var(--accent-rgb), .36);
+      background: linear-gradient(180deg, rgba(var(--accent-rgb), .14), rgba(8, 15, 27, .92));
+      box-shadow: 0 16px 38px rgba(0,0,0,.34), inset 0 0 0 1px rgba(var(--accent-rgb), .08);
+    }
+
+    .nav-index {
+      font-size: .74rem;
+      letter-spacing: .16em;
+      color: var(--accent);
+    }
+
+    .nav-glyph {
+      width: 12px;
+      height: 12px;
+      border-top: 1px solid rgba(var(--accent-rgb), .46);
+      border-right: 1px solid rgba(var(--accent-rgb), .46);
+      transform: rotate(45deg);
+      justify-self: end;
+      opacity: .7;
+    }
+
+    .nav-actions {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+
+    .btn,
+    .link-btn,
+    .tiny-link {
+      appearance: none;
+      text-decoration: none;
+      color: var(--text);
+      cursor: pointer;
+      transition: transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+    }
+
+    .btn,
+    .link-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 12px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(var(--accent-rgb), .26);
+      background: rgba(var(--accent-rgb), .08);
+      min-height: 44px;
+    }
+
+    .btn:hover,
+    .btn:focus-visible,
+    .link-btn:hover,
+    .link-btn:focus-visible,
+    .tiny-link:hover,
+    .tiny-link:focus-visible {
+      outline: none;
+      transform: translateY(-1px);
+      box-shadow: 0 10px 28px rgba(0,0,0,.24);
+    }
+
+    .btn--primary {
+      color: #08101b;
+      background: linear-gradient(180deg, var(--accent), color-mix(in srgb, var(--accent) 72%, white));
+      border-color: transparent;
+      font-weight: 700;
+    }
+
+    .btn--ghost { background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.14); }
+    .btn--amber { background: rgba(255, 180, 99, .1); border-color: rgba(255, 180, 99, .22); color: var(--amber-2); }
+
+    .viewport {
+      min-height: calc(100vh - 116px);
+      position: relative;
+      outline: none;
+    }
+
+    .section {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transform: translateY(16px) scale(.985);
+      pointer-events: none;
+      transition: opacity .35s ease, transform .35s ease;
+    }
+
+    .section.is-active {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+      position: relative;
+    }
+
+    .section-shell { display: grid; gap: 14px; }
+
+    .section-header,
+    .hero,
+    .detail-card,
+    .timeline-card,
+    .resume-card {
+      padding: 20px;
+    }
+
+    .hero {
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 88% 18%, rgba(255,255,255,.13), transparent 10%),
+        linear-gradient(135deg, rgba(var(--accent-rgb), .12), transparent 32%),
+        linear-gradient(180deg, rgba(7, 14, 26, .94), rgba(6, 11, 20, .86));
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(320px, .85fr);
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    .hero-copy h1 {
+      margin: 0 0 10px;
+      font-size: clamp(3rem, 7vw, 6rem);
+      line-height: .92;
+      letter-spacing: -.06em;
+      text-transform: uppercase;
+      text-wrap: balance;
+    }
+
+    .hero-copy h1 span { color: var(--accent); text-shadow: 0 0 32px rgba(var(--accent-rgb), .22); }
+
+    .role-line {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 16px;
+      font-size: 1.03rem;
+      color: var(--white);
+    }
+
+    .role-pill {
+      padding: 6px 11px;
+      border-radius: 999px;
+      border: 1px solid rgba(var(--accent-rgb), .22);
+      background: rgba(var(--accent-rgb), .08);
+      color: var(--accent);
+      font-size: .82rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .hero-copy p {
+      max-width: 62ch;
+      margin: 0 0 14px;
+      color: #d5e6f4;
+      line-height: 1.62;
+      font-size: 1rem;
+    }
+
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px; }
+
+    .hero-side {
+      position: relative;
+      padding: 18px;
+      min-height: 100%;
+      background: linear-gradient(180deg, rgba(11, 20, 35, .8), rgba(7, 13, 23, .88));
+      border: 1px solid rgba(var(--accent-rgb), .18);
+      clip-path: polygon(18px 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0 100%, 0 18px);
+      overflow: hidden;
+    }
+
+    .hero-side::before {
+      content: "";
+      position: absolute;
+      inset: -10% -30% auto auto;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      border: 1px solid rgba(var(--accent-rgb), .18);
+      box-shadow: 0 0 50px rgba(var(--accent-rgb), .08), inset 0 0 32px rgba(var(--accent-rgb), .08);
+      animation: slow-spin 12s linear infinite;
+    }
+
+    .hero-side::after {
+      content: "";
+      position: absolute;
+      inset: 46% 8% auto 8%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(var(--accent-rgb), .48), transparent);
+      animation: sweep 4s linear infinite;
+    }
+
+    .hero-sphere {
+      width: 180px;
+      aspect-ratio: 1;
+      margin: 14px auto 22px;
+      border-radius: 50%;
+      position: relative;
+      border: 1px solid rgba(var(--accent-rgb), .26);
+      background:
+        radial-gradient(circle at 35% 35%, rgba(255,255,255,.2), transparent 24%),
+        radial-gradient(circle at 50% 50%, rgba(var(--accent-rgb), .5), rgba(var(--accent-rgb), .08) 28%, transparent 68%);
+      box-shadow: 0 0 46px rgba(var(--accent-rgb), .18), inset 0 0 40px rgba(var(--accent-rgb), .08);
+      animation: float 5.5s ease-in-out infinite;
+    }
+
+    .hero-sphere::before,
+    .hero-sphere::after {
+      content: "";
+      position: absolute;
+      inset: 14px;
+      border: 1px solid rgba(var(--accent-rgb), .22);
+      border-radius: 50%;
+    }
+    .hero-sphere::after { inset: 38px; }
+
+    .hero-signal {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .signal-row,
+    .context-row,
+    .telemetry-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      color: #dceaf8;
+      font-size: .94rem;
+    }
+
+    .signal-row:last-child,
+    .context-row:last-child,
+    .telemetry-row:last-child { border-bottom: 0; }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .metric {
+      padding: 16px;
+      min-height: 112px;
+      display: grid;
+      align-content: start;
+      gap: 8px;
+    }
+
+    .metric .label {
+      color: var(--muted);
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      font-size: .68rem;
+    }
+
+    .metric .value {
+      font-size: 1.25rem;
+      line-height: 1.2;
+      font-weight: 700;
+    }
+
+    .split-grid {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 14px;
+    }
+
+    .inline-card {
+      padding: 18px;
+    }
+
+    .subsection-title {
+      margin: 0 0 10px;
+      font-size: 1.4rem;
+      letter-spacing: -.03em;
+    }
+
+    .tab-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+
+    .tab {
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(var(--accent-rgb), .24);
+      background: rgba(var(--accent-rgb), .08);
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .timeline-list,
+    .system-list,
+    .resume-list,
+    .simple-list { margin: 0; padding-left: 1.1rem; color: #dbeafa; }
+    .timeline-list li,
+    .system-list li,
+    .resume-list li,
+    .simple-list li { margin: 0 0 10px; line-height: 1.5; }
+
+    .dossiers-layout {
+      display: grid;
+      grid-template-columns: minmax(320px, 440px) minmax(0, 1fr);
+      gap: 14px;
+      align-items: start;
+    }
+
+    .dossier-list { display: grid; gap: 12px; }
+
+    .dossier-card {
+      padding: 16px;
+      cursor: pointer;
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease, background .18s ease;
+      border: 1px solid transparent;
+    }
+
+    .dossier-card:hover,
+    .dossier-card:focus-visible {
+      outline: none;
+      transform: translateX(5px);
+      border-color: rgba(var(--accent-rgb), .26);
+      box-shadow: 0 16px 38px rgba(0,0,0,.28);
+    }
+
+    .dossier-card.is-active {
+      border-color: rgba(var(--accent-rgb), .36);
+      background: linear-gradient(180deg, rgba(var(--accent-rgb), .12), rgba(8, 15, 27, .92));
+      box-shadow: 0 18px 42px rgba(0,0,0,.3), inset 0 0 0 1px rgba(var(--accent-rgb), .08);
+    }
+
+    .dossier-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: start;
+      margin-bottom: 8px;
+    }
+
+    .dossier-name {
+      margin: 0;
+      font-size: 1.16rem;
+      line-height: 1.18;
+    }
+
+    .pill {
+      flex: 0 0 auto;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(var(--accent-rgb), .22);
+      background: rgba(var(--accent-rgb), .08);
+      font-size: .72rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .tag-row, .role-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 12px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .tag-row li, .role-tags li {
+      padding: 8px 11px;
+      border-radius: 999px;
+      border: 1px solid rgba(var(--accent-rgb), .16);
+      background: rgba(var(--accent-rgb), .06);
+      color: #dceeff;
+      font-size: .84rem;
+    }
+
+    .detail-card {
+      min-height: 100%;
+      background:
+        radial-gradient(circle at 96% 10%, rgba(var(--accent-rgb), .16), transparent 18%),
+        linear-gradient(180deg, rgba(7, 14, 26, .95), rgba(5, 10, 19, .88));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .detail-card::after {
+      content: "";
+      position: absolute;
+      inset: auto -12% 8% auto;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      border: 1px solid rgba(var(--accent-rgb), .14);
+      opacity: .4;
+    }
+
+    .detail-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: start;
+      margin-bottom: 14px;
+    }
+
+    .detail-title {
+      margin: 0;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      line-height: .96;
+      letter-spacing: -.05em;
+      text-transform: uppercase;
+    }
+
+    .detail-role { margin: 6px 0 0; color: var(--accent); }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: 1.12fr .88fr;
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .metric-board {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin: 14px 0 18px;
+    }
+
+    .metric-board .metric {
+      min-height: 90px;
+      background: linear-gradient(180deg, rgba(var(--accent-rgb), .08), rgba(8, 15, 27, .86));
+    }
+
+    .link-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+
+    .mini-link {
+      padding: 10px 13px;
+      border-radius: 999px;
+      border: 1px solid rgba(var(--accent-rgb), .22);
+      background: rgba(var(--accent-rgb), .08);
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .mini-link.is-disabled {
+      pointer-events: none;
+      opacity: .48;
+    }
+
+    .timeline-grid,
+    .systems-grid,
+    .codex-grid,
+    .comms-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .timeline-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .systems-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .codex-grid { grid-template-columns: 1.1fr .9fr; }
+    .comms-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+    .timeline-card,
+    .resume-card,
+    .contact-card,
+    .system-card {
+      padding: 18px;
+      background: linear-gradient(180deg, rgba(8, 15, 27, .92), rgba(6, 10, 18, .86));
+      box-shadow: var(--shadow);
+    }
+
+    .timeline-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .era { color: var(--accent); font-size: .82rem; letter-spacing: .14em; text-transform: uppercase; }
+
+    .system-card .system-list { columns: 2; column-gap: 20px; padding-left: 1rem; }
+
+    .resume-headline {
+      font-size: 1.15rem;
+      color: var(--accent);
+      margin: 0 0 10px;
+    }
+
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, rgba(255,255,255,.08), rgba(var(--accent-rgb), .36), rgba(255,255,255,.08));
+      margin: 14px 0;
+    }
+
+    .contact-card a { color: var(--accent); text-decoration: none; }
+
+    .panel-title { margin: 0 0 8px; font-size: 1.18rem; }
+
+    .telemetry-meter,
+    .boot-meter {
+      height: 12px;
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid rgba(var(--accent-rgb), .22);
+      background: rgba(var(--accent-rgb), .08);
+    }
+
+    .telemetry-meter > span,
+    .boot-meter > span {
+      display: block;
+      width: 0;
+      height: 100%;
+      background: linear-gradient(90deg, rgba(var(--accent-rgb), .42), rgba(var(--accent-rgb), .95));
+      box-shadow: 0 0 16px rgba(var(--accent-rgb), .34);
+      transition: width .35s ease;
+    }
+
+    .sidebar small, .footer-note { color: var(--muted); line-height: 1.55; }
+
+    .preview-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .tiny-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(var(--accent-rgb), .2);
+      background: rgba(var(--accent-rgb), .08);
+    }
+
+    .boot {
+      position: fixed;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 16px;
+      background:
+        radial-gradient(circle at 50% 45%, rgba(255, 180, 99, .12), transparent 18%),
+        radial-gradient(circle at 50% 50%, rgba(255, 180, 99, .07), transparent 30%),
+        linear-gradient(180deg, rgba(3,5,9,.98), rgba(2,4,8,.98));
+      z-index: 20;
+      transition: opacity .4s ease, visibility .4s ease;
+    }
+
+    .boot-card {
+      width: min(1120px, 100%);
+      padding: 24px;
+      display: grid;
+      grid-template-columns: 1.05fr .8fr 1fr;
+      gap: 18px;
+      background: linear-gradient(180deg, rgba(11,8,6,.94), rgba(8,10,14,.9));
+      box-shadow: 0 34px 100px rgba(0,0,0,.56);
+      overflow: hidden;
+    }
+
+    .boot-card h1 {
+      margin: 0 0 12px;
+      font-size: clamp(2.4rem, 5vw, 4.4rem);
+      line-height: .92;
+      letter-spacing: -.05em;
+      text-transform: uppercase;
+    }
+
+    .boot-copy { color: #ead7c1; line-height: 1.65; max-width: 40ch; }
+
+    .boot-visual {
+      position: relative;
+      min-height: 360px;
+      display: grid;
+      place-items: center;
+    }
+
+    .boot-ring,
+    .boot-core,
+    .boot-pulse {
+      position: absolute;
+      border-radius: 50%;
+    }
+
+    .boot-ring.outer {
+      width: 270px;
+      aspect-ratio: 1;
+      border: 1px solid rgba(255, 180, 99, .42);
+      box-shadow: inset 0 0 26px rgba(255,180,99,.08), 0 0 30px rgba(255,180,99,.08);
+      animation: slow-spin 13s linear infinite;
+    }
+
+    .boot-ring.outer::before,
+    .boot-ring.outer::after,
+    .boot-ring.inner::before,
+    .boot-ring.inner::after {
+      content: "";
+      position: absolute;
+      background: var(--amber);
+    }
+
+    .boot-ring.outer::before,
+    .boot-ring.outer::after {
+      width: 24px;
+      height: 2px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .boot-ring.outer::before { top: -1px; }
+    .boot-ring.outer::after { bottom: -1px; }
+
+    .boot-ring.inner {
+      width: 170px;
+      aspect-ratio: 1;
+      border: 1px solid rgba(255, 180, 99, .28);
+      animation: reverse-spin 9s linear infinite;
+    }
+
+    .boot-ring.inner::before,
+    .boot-ring.inner::after {
+      width: 2px;
+      height: 26px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .boot-ring.inner::before { left: -1px; }
+    .boot-ring.inner::after { right: -1px; }
+
+    .boot-core {
+      width: 78px;
+      aspect-ratio: 1;
+      border: 1px solid rgba(255,180,99,.44);
+      background:
+        radial-gradient(circle, rgba(255, 180, 99, .82) 0 10%, rgba(255, 180, 99, .18) 30%, transparent 64%),
+        radial-gradient(circle, rgba(255,255,255,.18), transparent 62%);
+      box-shadow: 0 0 34px rgba(255,180,99,.18);
+    }
+
+    .boot-pulse {
+      width: 220px;
+      aspect-ratio: 1;
+      border: 1px dashed rgba(255,180,99,.26);
+      animation: pulse-ring 2.6s ease-out infinite;
+    }
+
+    .boot-side { display: grid; gap: 14px; align-content: start; }
+    .boot-log { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+
+    .boot-log li {
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,180,99,.18);
+      background: rgba(255,180,99,.08);
+      color: var(--amber-2);
+      line-height: 1.4;
+    }
+
+    .boot-meta { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+
+    .footnote {
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255,255,255,.08);
+      color: var(--muted);
+      font-size: .9rem;
+      line-height: 1.55;
+    }
+
+    .boot.glitch-out { animation: boot-out .45s ease forwards; }
+
+    @keyframes boot-out {
+      from { opacity: 1; }
+      to { opacity: 0; transform: scale(1.02); visibility: hidden; }
+    }
+
+    @keyframes drift { from { transform: translateY(0px); } 50% { transform: translateY(-4px); } to { transform: translateY(0px); } }
+    @keyframes pulse { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.25); opacity: .7; } }
+    @keyframes slow-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    @keyframes reverse-spin { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
+    @keyframes sweep { 0% { transform: translateX(-10%); opacity: 0; } 40% { opacity: 1; } 100% { transform: translateX(8%); opacity: 0; } }
+    @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+    @keyframes pulse-ring { from { transform: scale(.86); opacity: .95; } to { transform: scale(1.1); opacity: 0; } }
+
+
+    .planet,
+    .ring,
+    .horizon,
+    .fog,
+    .grid,
+    .hud-bloom {
+      transition: transform .85s ease, opacity .85s ease, filter .85s ease;
+    }
+
+    body[data-sector="command"] .planet { transform: translate3d(0, 0, 0) scale(1); }
+    body[data-sector="dossiers"] .planet { transform: translate3d(2vw, .8vh, 0) scale(1.04); opacity: .74; }
+    body[data-sector="service"] .planet { transform: translate3d(-2vw, -1vh, 0) scale(.98); opacity: .62; }
+    body[data-sector="systems"] .ring { transform: rotate(-13deg) scale(1.05); opacity: .54; }
+    body[data-sector="codex"] .horizon { filter: saturate(1.18) brightness(1.05); }
+    body[data-sector="comms"] .fog { transform: translateY(-1vh); opacity: .9; }
+
+    .route-flash {
+      position: fixed;
+      inset: 0;
+      z-index: 18;
+      pointer-events: none;
+      opacity: 0;
+      overflow: hidden;
+    }
+
+    .route-flash::before,
+    .route-flash::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+    }
+
+    .route-flash::before {
+      background:
+        linear-gradient(180deg, transparent 0%, rgba(var(--accent-rgb), .03) 22%, rgba(var(--accent-rgb), .16) 48%, rgba(var(--accent-rgb), .04) 68%, transparent 100%);
+      transform: translateY(-100%);
+    }
+
+    .route-flash::after {
+      background:
+        linear-gradient(90deg, transparent 0%, rgba(var(--accent-rgb), .16) 40%, rgba(255,255,255,.26) 50%, rgba(var(--accent-rgb), .14) 60%, transparent 100%);
+      transform: translateX(-100%);
+      mix-blend-mode: screen;
+    }
+
+    .route-flash.is-active { opacity: 1; }
+    .route-flash.is-active::before { animation: routeSweepY .58s ease forwards; }
+    .route-flash.is-active::after { animation: routeSweepX .42s ease .06s forwards; }
+
+    @keyframes routeSweepY {
+      0% { opacity: 0; transform: translateY(-100%); }
+      20% { opacity: .85; }
+      100% { opacity: 0; transform: translateY(100%); }
+    }
+
+    @keyframes routeSweepX {
+      0% { opacity: 0; transform: translateX(-100%); }
+      25% { opacity: .85; }
+      100% { opacity: 0; transform: translateX(100%); }
+    }
+
+    .boot.boot--idle {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .auth-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 24;
+      padding: 18px;
+      display: grid;
+      place-items: center;
+      background:
+        radial-gradient(circle at 18% 18%, rgba(112, 170, 255, 0.08), transparent 18%),
+        radial-gradient(circle at 82% 18%, rgba(255, 180, 99, 0.08), transparent 16%),
+        linear-gradient(180deg, rgba(2, 5, 10, 0.98), rgba(3, 6, 12, 0.98));
+      transition: opacity .45s ease, visibility .45s ease, transform .45s ease;
+    }
+
+    .auth-screen.is-hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: scale(1.01);
+    }
+
+    .auth-card {
+      width: min(1220px, 100%);
+      padding: 24px;
+      display: grid;
+      grid-template-columns: 1.05fr .9fr;
+      gap: 18px;
+      background:
+        linear-gradient(145deg, rgba(6, 10, 19, .95), rgba(7, 13, 23, .88)),
+        radial-gradient(circle at 74% 18%, rgba(255,180,99,.08), transparent 16%);
+      box-shadow: 0 34px 110px rgba(0,0,0,.58);
+      overflow: hidden;
+    }
+
+    .auth-copy {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(320px, .95fr);
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .auth-copy h1 {
+      margin: 0 0 12px;
+      font-size: clamp(2.5rem, 5vw, 4.7rem);
+      line-height: .92;
+      letter-spacing: -.05em;
+      text-transform: uppercase;
+    }
+
+    .auth-lead {
+      margin: 0 0 18px;
+      color: #d3e1ef;
+      line-height: 1.7;
+      max-width: 42ch;
+    }
+
+    .auth-meta {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .auth-stat {
+      padding: 12px 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.035);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.01);
+    }
+
+    .auth-stat strong {
+      display: block;
+      margin-top: 4px;
+      font-size: 1rem;
+      color: var(--white);
+    }
+
+    .auth-visual {
+      position: relative;
+      min-height: 340px;
+      border-radius: 20px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 50% 48%, rgba(116, 209, 255, .12), transparent 16%),
+        radial-gradient(circle at 50% 50%, rgba(255, 180, 99, .10), transparent 30%),
+        linear-gradient(180deg, rgba(5, 10, 18, .88), rgba(3, 6, 12, .96));
+      border: 1px solid rgba(255,255,255,.06);
+    }
+
+    .auth-visual::before,
+    .auth-visual::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .auth-visual::before {
+      background:
+        repeating-linear-gradient(90deg, transparent 0 16px, rgba(115,209,255,.03) 16px 17px),
+        repeating-linear-gradient(180deg, transparent 0 16px, rgba(115,209,255,.03) 16px 17px);
+      mask-image: radial-gradient(circle at 50% 50%, black 0%, black 56%, transparent 85%);
+      opacity: .9;
+    }
+
+    .auth-visual::after {
+      background:
+        linear-gradient(120deg, transparent 0 40%, rgba(255,255,255,.06) 45%, transparent 50% 100%);
+      animation: authSweep 6.5s ease-in-out infinite;
+    }
+
+    @keyframes authSweep {
+      0%, 100% { transform: translateX(-16%); opacity: 0; }
+      18% { opacity: .5; }
+      50% { transform: translateX(18%); opacity: .85; }
+      82% { opacity: 0; }
+    }
+
+    .auth-orbit,
+    .auth-orbit::before,
+    .auth-orbit::after,
+    .auth-core,
+    .auth-scan {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+    }
+
+    .auth-orbit {
+      width: 260px;
+      aspect-ratio: 1;
+      border: 1px solid rgba(115,209,255,.26);
+      box-shadow: inset 0 0 22px rgba(115,209,255,.08), 0 0 26px rgba(115,209,255,.07);
+      animation: slow-spin 18s linear infinite;
+    }
+
+    .auth-orbit::before,
+    .auth-orbit::after {
+      content: "";
+      border-radius: 50%;
+      position: absolute;
+      inset: 14%;
+      border: 1px solid rgba(255,180,99,.18);
+    }
+
+    .auth-orbit::after {
+      inset: 31%;
+      border-color: rgba(255,255,255,.12);
+      animation: reverse-spin 10s linear infinite;
+    }
+
+    .auth-core {
+      width: 102px;
+      aspect-ratio: 1;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,.64) 0 5%, rgba(115,209,255,.46) 22%, rgba(255,180,99,.14) 42%, transparent 72%);
+      box-shadow: 0 0 34px rgba(115,209,255,.14);
+    }
+
+    .auth-scan {
+      width: 300px;
+      aspect-ratio: 1;
+      border: 1px dashed rgba(255,180,99,.22);
+      animation: pulse-ring 2.8s ease-out infinite;
+    }
+
+    .auth-console {
+      position: absolute;
+      inset: auto 18px 18px 18px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.06);
+      background: rgba(7, 12, 20, .72);
+      backdrop-filter: blur(10px);
+      display: grid;
+      gap: 8px;
+    }
+
+    .console-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      font-size: .88rem;
+      color: var(--muted);
+    }
+
+    .console-row strong { color: var(--white); }
+
+    .auth-form-shell {
+      display: grid;
+      gap: 14px;
+      align-content: start;
+    }
+
+    .auth-form {
+      display: grid;
+      gap: 14px;
+    }
+
+    .auth-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .auth-field {
+      display: grid;
+      gap: 6px;
+    }
+
+    .auth-field label {
+      font-size: .78rem;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .auth-field input,
+    .auth-field select {
+      width: 100%;
+      padding: 14px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.1);
+      background: rgba(255,255,255,.03);
+      color: var(--white);
+      outline: none;
+      transition: border-color .25s ease, box-shadow .25s ease, background .25s ease;
+    }
+
+    .auth-field input:focus,
+    .auth-field select:focus {
+      border-color: rgba(115,209,255,.42);
+      box-shadow: 0 0 0 3px rgba(115,209,255,.12);
+      background: rgba(255,255,255,.05);
+    }
+
+    .auth-field select option {
+      background: #09101d;
+      color: var(--white);
+    }
+
+    .auth-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.1);
+      background: rgba(255,255,255,.03);
+      color: var(--text);
+      width: fit-content;
+    }
+
+    .auth-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .auth-actions .btn,
+    .auth-actions .link-btn {
+      min-width: 190px;
+      justify-content: center;
+    }
+
+    .auth-log {
+      min-height: 164px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.06);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.015)),
+        rgba(4, 8, 14, .72);
+      overflow: hidden;
+      display: grid;
+      align-content: start;
+      gap: 8px;
+    }
+
+    .auth-line {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #cddbea;
+      font-size: .95rem;
+      line-height: 1.45;
+      opacity: 0;
+      transform: translateY(6px);
+      animation: authLine .28s ease forwards;
+    }
+
+    @keyframes authLine {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .auth-line::before {
+      content: ">";
+      color: var(--amber);
+      font-weight: 700;
+    }
+
+    .auth-note {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: .92rem;
+    }
+
+
+    .auth-display {
+      margin-top: 18px;
+      padding: 16px;
+      display: grid;
+      gap: 10px;
+      background:
+        linear-gradient(180deg, rgba(7, 12, 20, .76), rgba(4, 8, 14, .78));
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.02);
+    }
+
+    .auth-display-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: linear-gradient(90deg, rgba(255,180,99,.06), rgba(115,209,255,.04));
+    }
+
+    .auth-display-row span {
+      font-size: .76rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .auth-display-row strong {
+      color: var(--white);
+      text-align: right;
+    }
+
+    .auth-sequence-shell {
+      display: grid;
+      gap: 14px;
+      align-content: start;
+    }
+
+    .auth-sequence {
+      padding: 16px;
+      display: grid;
+      gap: 14px;
+      background:
+        linear-gradient(180deg, rgba(4, 8, 14, .82), rgba(5, 9, 16, .72));
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.02);
+    }
+
+    .auth-sequence-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .auth-dots {
+      display: inline-flex;
+      gap: 7px;
+    }
+
+    .auth-dots span {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.16);
+      box-shadow: 0 0 0 1px rgba(255,255,255,.04);
+      animation: authDot 1.3s ease-in-out infinite;
+    }
+
+    .auth-dots span:nth-child(2) { animation-delay: .16s; }
+    .auth-dots span:nth-child(3) { animation-delay: .32s; }
+
+    @keyframes authDot {
+      0%, 100% { transform: translateY(0); opacity: .32; }
+      50% { transform: translateY(-2px); opacity: 1; background: var(--amber); }
+    }
+
+    .auth-progress {
+      display: grid;
+      gap: 10px;
+    }
+
+    .auth-progress-bar {
+      height: 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.03);
+      overflow: hidden;
+    }
+
+    .auth-progress-bar span {
+      display: block;
+      width: 0%;
+      height: 100%;
+      border-radius: inherit;
+      background:
+        linear-gradient(90deg, rgba(255,180,99,.55), rgba(255,213,162,.98));
+      box-shadow: 0 0 24px rgba(255,180,99,.24);
+      transition: width .35s ease;
+    }
+
+    .auth-progress-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      color: var(--amber-2);
+      font-size: .98rem;
+    }
+
+    .auth-progress-meta strong {
+      font-size: 1.35rem;
+      line-height: 1;
+    }
+
+
+    .audio-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 11px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      cursor: pointer;
+      transition: background .2s ease, border-color .2s ease, transform .2s ease;
+    }
+
+    .audio-pill:hover {
+      background: rgba(255,255,255,.06);
+      border-color: rgba(var(--accent-rgb), .28);
+      transform: translateY(-1px);
+    }
+
+    .audio-pill.is-playing {
+      background: rgba(var(--accent-rgb), .1);
+      border-color: rgba(var(--accent-rgb), .28);
+      box-shadow: 0 0 0 1px rgba(var(--accent-rgb), .08) inset;
+    }
+
+    .audio-pill__dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: currentColor;
+      opacity: .45;
+      box-shadow: 0 0 0 0 rgba(var(--accent-rgb), .35);
+      transition: opacity .2s ease;
+    }
+
+    .audio-pill.is-playing .audio-pill__dot {
+      opacity: 1;
+      animation: pulse 1.6s ease infinite;
+    }
+
+    .audio-pill small {
+      display: block;
+      font-size: .74rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .audio-pill strong {
+      display: block;
+      font-size: .9rem;
+      color: var(--white);
+    }
+
+    .topbar {
+      grid-template-columns: minmax(0, 1.2fr) auto auto auto;
+    }
+
+    .topbar__tool {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @media (max-width: 1180px) {
+      .auth-card { grid-template-columns: 1fr; }
+      .auth-copy { grid-template-columns: 1fr; }
+      .auth-visual { min-height: 260px; }
+    }
+
+    @media (max-width: 760px) {
+      .auth-meta,
+      .auth-grid { grid-template-columns: 1fr; }
+      .auth-actions { flex-direction: column; }
+      .auth-actions .btn,
+      .auth-actions .link-btn { width: 100%; }
+      .auth-display-row,
+      .auth-progress-meta { flex-direction: column; align-items: flex-start; }
+      .auth-display-row strong { text-align: left; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+    }
+
+    @media (max-width: 1180px) {
+      .layout { grid-template-columns: 220px minmax(0, 1fr); }
+      .sidebar { grid-column: 1 / -1; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .sidebar > section { position: static; }
+      .boot-card { grid-template-columns: 1fr; }
+      .boot-visual { min-height: 260px; }
+    }
+
+    @media (max-width: 980px) {
+      .topbar { grid-template-columns: 1fr; }
+      .layout { grid-template-columns: 1fr; }
+      .nav-shell { position: static; }
+      .viewport { min-height: auto; }
+      .section { position: static; opacity: 1; transform: none; pointer-events: auto; display: none; }
+      .section.is-active { display: block; }
+      .hero-grid,
+      .split-grid,
+      .dossiers-layout,
+      .detail-grid,
+      .codex-grid,
+      .timeline-grid,
+      .systems-grid,
+      .comms-grid,
+      .metrics-grid,
+      .sidebar { grid-template-columns: 1fr; }
+      .system-card .system-list { columns: 1; }
+      .boot-card { padding: 18px; }
+    }
+
+    @media (max-width: 640px) {
+      .app { padding: 10px; }
+      .topbar, .nav-shell, .sidebar > section, .hero, .section-header, .detail-card, .timeline-card, .resume-card, .inline-card { padding: 16px; }
+      .hero-copy h1 { font-size: clamp(2.5rem, 15vw, 4rem); }
+      .hero-actions { flex-direction: column; }
+      .btn, .link-btn { width: 100%; }
+    }
+  
+
+    /* ===== v5 overrides / additions ===== */
+    .space::before,
+    .space::after {
+      content: "";
+      position: absolute;
+      pointer-events: none;
+    }
+
+    .space::before {
+      right: -10vw;
+      bottom: 12vh;
+      width: 58vw;
+      height: 58vw;
+      border-radius: 50%;
+      border: 1px solid rgba(187, 223, 255, 0.09);
+      box-shadow:
+        0 0 120px rgba(73, 116, 255, 0.07),
+        inset 0 0 90px rgba(255,255,255,0.02);
+      mask-image: linear-gradient(180deg, transparent 0 18%, rgba(0,0,0,.72) 32% 78%, transparent 100%);
+      opacity: .44;
+      transform: rotate(12deg);
+    }
+
+    .space::after {
+      left: -10vw;
+      bottom: -2vh;
+      width: 54vw;
+      height: 22vw;
+      border-top: 1px solid rgba(255, 180, 99, 0.10);
+      border-bottom: 1px solid rgba(255, 180, 99, 0.04);
+      border-radius: 50%;
+      transform: rotate(-8deg);
+      opacity: .36;
+      filter: blur(.2px);
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: auto auto 8vh 8vw;
+      width: 32vw;
+      height: 18vw;
+      background:
+        linear-gradient(180deg, transparent 0 48%, rgba(150, 196, 255, .06) 49%, transparent 52%),
+        linear-gradient(90deg, transparent 0 18%, rgba(150, 196, 255, .04) 19%, transparent 20% 42%, rgba(150, 196, 255, .03) 43%, transparent 44% 66%, rgba(150, 196, 255, .05) 67%, transparent 68%);
+      clip-path: polygon(0 100%, 4% 76%, 12% 84%, 21% 46%, 28% 56%, 35% 20%, 42% 62%, 48% 28%, 56% 76%, 63% 42%, 72% 58%, 78% 32%, 86% 70%, 92% 48%, 100% 100%);
+      opacity: .22;
+      pointer-events: none;
+      z-index: -1;
+      filter: blur(.2px);
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 16px;
+      align-self: start;
+    }
+
+    .sidebar > section {
+      position: static;
+    }
+
+    .topbar__title strong {
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      font-size: .92rem;
+    }
+
+    .topbar__title .muted {
+      display: block;
+      margin-top: 2px;
+      font-size: .78rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .auth-screen {
+      background:
+        radial-gradient(circle at 18% 18%, rgba(112, 170, 255, 0.09), transparent 18%),
+        radial-gradient(circle at 82% 16%, rgba(255, 180, 99, 0.08), transparent 14%),
+        linear-gradient(180deg, rgba(2, 5, 10, 0.88), rgba(3, 6, 12, 0.94));
+      backdrop-filter: blur(6px);
+    }
+
+    .intro-shell {
+      width: min(1180px, 100%);
+      position: relative;
+      padding-bottom: 52px;
+    }
+
+    .login-frame {
+      width: min(1040px, 100%);
+      padding: 24px;
+      margin: 0 auto;
+      background:
+        radial-gradient(circle at 70% 50%, rgba(255,180,99,.09), transparent 20%),
+        linear-gradient(145deg, rgba(5, 10, 18, .96), rgba(5, 11, 20, .90));
+      box-shadow: 0 34px 110px rgba(0,0,0,.58);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .login-frame::before,
+    .login-frame::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .login-frame::before {
+      background:
+        linear-gradient(90deg, transparent 0 54%, rgba(255,255,255,.05) 55%, transparent 56% 100%),
+        linear-gradient(180deg, transparent 0 70%, rgba(255,255,255,.03) 71%, transparent 72% 100%);
+      opacity: .35;
+    }
+
+    .login-frame::after {
+      background:
+        linear-gradient(120deg, transparent 0 42%, rgba(255,255,255,.06) 45%, transparent 48% 100%);
+      transform: translateX(-14%);
+      animation: introSweep 7s ease-in-out infinite;
+      opacity: .75;
+    }
+
+    @keyframes introSweep {
+      0%, 100% { transform: translateX(-16%); opacity: 0; }
+      22% { opacity: .42; }
+      54% { transform: translateX(18%); opacity: .72; }
+      86% { opacity: 0; }
+    }
+
+    .login-frame.is-granted {
+      box-shadow: 0 34px 110px rgba(0,0,0,.58), 0 0 0 1px rgba(115,209,255,.12) inset, 0 0 46px rgba(115,209,255,.08);
+    }
+
+    .login-frame.is-granted .login-status {
+      color: var(--cyan-2);
+      border-color: rgba(115,209,255,.34);
+      background: linear-gradient(90deg, rgba(115,209,255,.12), rgba(255,255,255,.03));
+    }
+
+    .login-frame.is-granted .fake-input {
+      border-color: rgba(115,209,255,.34);
+      box-shadow: inset 0 0 0 1px rgba(115,209,255,.08), 0 0 24px rgba(115,209,255,.06);
+    }
+
+    .login-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.12fr) minmax(320px, .88fr);
+      gap: 20px;
+      align-items: center;
+    }
+
+    .login-copy h1 {
+      margin: 0 0 14px;
+      font-size: clamp(3rem, 6vw, 5.2rem);
+      line-height: .92;
+      letter-spacing: -.06em;
+      text-transform: uppercase;
+      max-width: 9ch;
+    }
+
+    .login-copy p {
+      max-width: 45ch;
+      color: #d3e1ef;
+      line-height: 1.68;
+    }
+
+    .login-copy .eyebrow {
+      color: var(--cyan-2);
+      margin-bottom: .75rem;
+    }
+
+    .fake-form {
+      display: grid;
+      gap: 14px;
+      margin-top: 24px;
+      max-width: 520px;
+    }
+
+    .fake-row {
+      display: grid;
+      gap: 8px;
+    }
+
+    .fake-row > span {
+      font-size: .76rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .fake-input {
+      min-height: 58px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.08);
+      background:
+        linear-gradient(90deg, rgba(255,180,99,.05), rgba(115,209,255,.04)),
+        rgba(4, 8, 14, .78);
+      display: flex;
+      align-items: center;
+      padding: 0 18px;
+      position: relative;
+      overflow: hidden;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+
+    .fake-input::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent 0 80%, rgba(255,255,255,.06) 85%, transparent 100%);
+      opacity: .4;
+    }
+
+    .fake-placeholder {
+      opacity: .44;
+      min-width: 1ch;
+      white-space: nowrap;
+    }
+
+    .cursor {
+      width: 9px;
+      height: 18px;
+      margin-left: 10px;
+      border-radius: 1px;
+      background: rgba(255,255,255,.78);
+      box-shadow: 0 0 10px rgba(255,255,255,.35);
+      animation: blink 1s steps(1) infinite;
+    }
+
+    @keyframes blink {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: .1; }
+    }
+
+    .login-status {
+      margin-top: 18px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,180,99,.20);
+      background: rgba(255,180,99,.06);
+      color: var(--amber-2);
+      font-size: .96rem;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .login-readout {
+      margin-top: 18px;
+      display: grid;
+      gap: 0;
+      border-top: 1px solid rgba(255,255,255,.08);
+      padding-top: 14px;
+      max-width: 540px;
+    }
+
+    .login-visual {
+      min-height: 360px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,.06);
+      background:
+        radial-gradient(circle at 50% 50%, rgba(115,209,255,.12), transparent 18%),
+        radial-gradient(circle at 50% 50%, rgba(255,180,99,.10), transparent 32%),
+        linear-gradient(180deg, rgba(5, 10, 18, .90), rgba(3, 6, 12, .98));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-visual::before,
+    .login-visual::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .login-visual::before {
+      background:
+        repeating-linear-gradient(90deg, transparent 0 16px, rgba(115,209,255,.03) 16px 17px),
+        repeating-linear-gradient(180deg, transparent 0 16px, rgba(115,209,255,.03) 16px 17px);
+      mask-image: radial-gradient(circle at 50% 50%, black 0%, black 56%, transparent 84%);
+      opacity: .86;
+    }
+
+    .login-visual::after {
+      background: radial-gradient(circle at 50% 50%, rgba(255,255,255,.06), transparent 46%);
+    }
+
+    .n7-ring,
+    .n7-ring::before,
+    .n7-ring::after {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+    }
+
+    .n7-ring {
+      width: 280px;
+      height: 280px;
+      border: 1px solid rgba(115,209,255,.24);
+      box-shadow: inset 0 0 20px rgba(115,209,255,.08), 0 0 34px rgba(115,209,255,.06);
+      animation: slow-spin 18s linear infinite;
+    }
+
+    .n7-ring::before,
+    .n7-ring::after {
+      content: "";
+      position: absolute;
+      inset: 16%;
+      border: 1px solid rgba(255,180,99,.18);
+    }
+
+    .n7-ring::after {
+      inset: 33%;
+      border-color: rgba(255,255,255,.10);
+      animation: reverse-spin 10s linear infinite;
+    }
+
+    .n7-mark {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      display: grid;
+      place-items: center;
+      gap: 10px;
+      text-align: center;
+      z-index: 2;
+    }
+
+    .n7-mark span {
+      font-size: clamp(3.4rem, 10vw, 6rem);
+      line-height: .9;
+      font-weight: 800;
+      letter-spacing: -.06em;
+      color: rgba(242,248,255,.92);
+      text-shadow: 0 0 20px rgba(255,255,255,.08);
+    }
+
+    .n7-mark i {
+      display: block;
+      width: 96px;
+      height: 8px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(255,180,99,.22), rgba(220,56,56,.92));
+      box-shadow: 0 0 18px rgba(220,56,56,.18);
+    }
+
+    .login-sweep {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 0 44%, rgba(255,255,255,.06) 50%, transparent 56%);
+      transform: translateY(-50%);
+      animation: loginScan 4.8s ease-in-out infinite;
+      opacity: .48;
+    }
+
+    @keyframes loginScan {
+      0%, 100% { transform: translateY(-54%); }
+      50% { transform: translateY(58%); }
+    }
+
+    .hack-window {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      width: min(420px, 42vw);
+      padding: 16px;
+      background:
+        linear-gradient(180deg, rgba(4, 8, 14, .92), rgba(5, 9, 16, .84));
+      box-shadow: 0 26px 80px rgba(0,0,0,.52);
+      z-index: 4;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(12px) scale(.985);
+      transition: opacity .35s ease, visibility .35s ease, transform .35s ease;
+    }
+
+    .hack-window.is-visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+    }
+
+    .hack-window.is-exit {
+      animation: hackExit .45s ease forwards;
+    }
+
+    @keyframes hackExit {
+      to { opacity: 0; transform: translateY(-10px) scale(.98); visibility: hidden; }
+    }
+
+    .hack-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .hack-log {
+      min-height: 186px;
+      max-height: 186px;
+      overflow: auto;
+      padding: 14px 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.06);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.015)),
+        rgba(4, 8, 14, .72);
+      display: grid;
+      align-content: start;
+      gap: 8px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255,180,99,.28) transparent;
+    }
+
+    .hack-line {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      color: #cddbea;
+      font-size: .92rem;
+      line-height: 1.45;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      opacity: 0;
+      transform: translateY(8px);
+      animation: authLine .28s ease forwards;
+    }
+
+    .hack-line::before {
+      content: ">";
+      color: var(--amber);
+      font-weight: 700;
+    }
+
+    .intro-controls {
+      position: absolute;
+      right: calc((100% - min(1040px, 100%)) / 2);
+      bottom: 0;
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      width: min(1040px, 100%);
+      padding-right: 6px;
+    }
+
+    .audio-fallback {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      z-index: 30;
+      padding: 12px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 180, 99, .24);
+      background: rgba(255, 180, 99, .12);
+      color: var(--amber-2);
+      box-shadow: 0 12px 34px rgba(0,0,0,.32);
+    }
+
+    .audio-fallback.is-hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translateY(8px);
+    }
+
+    .hero-sphere {
+      box-shadow: inset 0 0 36px rgba(var(--accent-rgb), .12), 0 0 42px rgba(var(--accent-rgb), .12);
+    }
+
+    .detail-card {
+      overflow: hidden;
+      animation: dossierReveal .52s cubic-bezier(.18,.84,.22,1) both;
+    }
+
+    .detail-card::after {
+      background:
+        linear-gradient(115deg, rgba(var(--accent-rgb), .13), transparent 30%),
+        linear-gradient(135deg, rgba(255,255,255,.06), transparent 26%);
+    }
+
+    @keyframes dossierReveal {
+      0% { opacity: 0; transform: translateY(18px) scale(.985); filter: blur(8px); }
+      100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+    }
+
+    .dossier-card {
+      overflow: hidden;
+      transition: transform .26s ease, border-color .26s ease, box-shadow .26s ease, background .26s ease;
+    }
+
+    .dossier-card:hover,
+    .dossier-card:focus-visible {
+      transform: translateX(6px);
+    }
+
+    .dossier-card.is-active {
+      transform: translateX(8px) scale(1.01);
+      border-color: rgba(var(--accent-rgb), .34);
+      box-shadow: 0 18px 42px rgba(0,0,0,.34), inset 0 0 0 1px rgba(var(--accent-rgb), .08);
+      background: linear-gradient(180deg, rgba(var(--accent-rgb), .10), rgba(8, 15, 27, .92));
+    }
+
+    .dossier-card.is-active .dossier-name {
+      color: var(--accent);
+    }
+
+    #detailMount {
+      position: relative;
+      min-height: 100%;
+    }
+
+    #detailMount::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 22px;
+      background: linear-gradient(120deg, rgba(var(--accent-rgb), .10), transparent 28%);
+      opacity: .3;
+      pointer-events: none;
+    }
+
+    .relay-panel-copy p:last-of-type {
+      margin-bottom: 0;
+    }
+
+    .relay-map-wrap {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.08);
+      background:
+        radial-gradient(circle at 50% 50%, rgba(var(--accent-rgb), .07), transparent 36%),
+        rgba(4, 8, 14, .72);
+      overflow: hidden;
+    }
+
+    .relay-map {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .relay-map .link {
+      stroke: rgba(178, 227, 255, .18);
+      stroke-width: 1.4;
+    }
+
+    .relay-map .node {
+      fill: rgba(234,245,255,.88);
+      stroke: rgba(234,245,255,.18);
+      stroke-width: 2;
+    }
+
+    .relay-map .node.hot {
+      fill: var(--accent);
+      filter: drop-shadow(0 0 8px rgba(var(--accent-rgb), .55));
+    }
+
+    .relay-map text {
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      font-size: 11px;
+      fill: rgba(234,245,255,.78);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .relay-feed {
+      display: grid;
+      gap: 0;
+      margin-top: 12px;
+      border-top: 1px solid rgba(255,255,255,.08);
+      padding-top: 10px;
+    }
+
+    .relay-feed-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+
+    .relay-feed-item:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .relay-feed-item span {
+      color: var(--muted);
+      font-size: .74rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
+    .relay-feed-item strong {
+      font-size: .92rem;
+      line-height: 1.45;
+    }
+
+    .ghost-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      color: var(--muted);
+      font-size: .78rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .ghost-tag::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 10px rgba(var(--accent-rgb), .42);
+    }
+
+    .hero-copy .link-btn.btn--ghost {
+      display: none;
+    }
+
+    .comms-grid .contact-card p a {
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    @media (max-width: 1180px) {
+      .sidebar { position: static; }
+    }
+
+    @media (max-width: 980px) {
+      .login-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hack-window {
+        position: static;
+        width: 100%;
+        margin: 14px auto 0;
+      }
+
+      .intro-controls {
+        position: static;
+        width: 100%;
+        margin-top: 12px;
+        justify-content: flex-start;
+        padding-right: 0;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .login-frame { padding: 16px; }
+      .login-copy h1 { font-size: clamp(2.4rem, 16vw, 4rem); }
+      .login-visual { min-height: 260px; }
+      .intro-shell { padding-bottom: 0; }
+      .intro-controls { margin-top: 10px; }
+      .audio-fallback { left: 12px; right: 12px; width: auto; }
+    }
+
+
+    /* ===== v7 mobile / deployment pass ===== */
+    body {
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+
+    .mobile-dock {
+      display: none;
+      position: fixed;
+      left: 10px;
+      right: 10px;
+      bottom: calc(10px + env(safe-area-inset-bottom));
+      z-index: 48;
+      gap: 8px;
+      padding: 8px;
+      border-radius: 22px;
+      border: 1px solid rgba(var(--accent-rgb), .2);
+      background: linear-gradient(180deg, rgba(5, 10, 19, .94), rgba(4, 8, 16, .92));
+      backdrop-filter: blur(18px);
+      box-shadow: 0 18px 48px rgba(0,0,0,.42), inset 0 0 0 1px rgba(255,255,255,.03);
+      overflow-x: auto;
+      scroll-snap-type: x proximity;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .mobile-dock::-webkit-scrollbar,
+    .sidebar::-webkit-scrollbar {
+      height: 0;
+      width: 0;
+    }
+
+    .mobile-dock__button {
+      flex: 0 0 auto;
+      min-width: 82px;
+      display: grid;
+      gap: 4px;
+      justify-items: center;
+      align-content: center;
+      padding: 10px 8px;
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 16px;
+      background: linear-gradient(180deg, rgba(10, 18, 32, .88), rgba(6, 11, 20, .88));
+      color: var(--text);
+      cursor: pointer;
+      scroll-snap-align: start;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease;
+    }
+
+    .mobile-dock__button.is-active {
+      border-color: rgba(var(--accent-rgb), .34);
+      background: linear-gradient(180deg, rgba(var(--accent-rgb), .16), rgba(6, 11, 20, .92));
+      box-shadow: 0 14px 28px rgba(0,0,0,.3), inset 0 0 0 1px rgba(var(--accent-rgb), .08);
+    }
+
+    .mobile-dock__button:focus-visible {
+      outline: none;
+      border-color: rgba(var(--accent-rgb), .44);
+      transform: translateY(-1px);
+    }
+
+    .mobile-dock__index {
+      font-size: .62rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .mobile-dock__label {
+      font-size: .72rem;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--white);
+      line-height: 1.1;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 980px) {
+      .nav-shell { display: none; }
+      .mobile-dock { display: flex; }
+      .app { padding-bottom: calc(92px + env(safe-area-inset-bottom)); }
+      .layout { gap: 12px; }
+      .sidebar {
+        grid-auto-flow: column;
+        grid-template-columns: repeat(3, minmax(320px, 82vw));
+        overflow-x: auto;
+        scroll-snap-type: x proximity;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 2px;
+      }
+      .sidebar > section {
+        min-width: min(82vw, 360px);
+        scroll-snap-align: start;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .app { padding: 10px 10px calc(92px + env(safe-area-inset-bottom)); }
+      .topbar {
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 10px;
+        padding: 14px;
+      }
+      .topbar__title { gap: 6px; align-items: flex-start; }
+      .topbar__title strong { font-size: .94rem; letter-spacing: .06em; }
+      .topbar__title .muted,
+      .topbar__clock { display: none; }
+      .topbar__status {
+        grid-column: 1 / -1;
+        min-height: 40px;
+        white-space: normal;
+        font-size: .9rem;
+      }
+      .audio-pill {
+        padding: 10px 12px;
+        min-height: 40px;
+      }
+      .audio-pill small { display: none; }
+      .audio-pill strong { font-size: .84rem; }
+      .mobile-dock {
+        left: 8px;
+        right: 8px;
+        bottom: calc(8px + env(safe-area-inset-bottom));
+        padding: 8px;
+        gap: 6px;
+      }
+      .mobile-dock__button {
+        min-width: 72px;
+        padding: 10px 7px;
+      }
+      .mobile-dock__label { font-size: .68rem; }
+      .sidebar {
+        grid-template-columns: repeat(3, 88vw);
+      }
+      .sidebar > section {
+        min-width: 88vw;
+      }
+    }
+
+  </style>
+</head>
+<body data-sector="command">
+  <div class="space" aria-hidden="true">
+    <div class="stars"></div>
+    <div class="planet"></div>
+    <div class="ring"></div>
+    <div class="horizon"></div>
+    <div class="fog"></div>
+    <div class="grid"></div>
+    <div class="scanlines"></div>
+  </div>
+  <div class="hud-bloom" aria-hidden="true"></div>
+  <div class="route-flash" id="routeFlash" aria-hidden="true"></div>
+
+  <div class="auth-screen" id="authScreen" aria-live="polite">
+    <div class="intro-shell">
+      <div class="login-frame cut-panel" id="loginFrame">
+        <div class="login-grid">
+          <div class="login-copy">
+            <p class="eyebrow eyebrow--accent">N7 Agent Network / restricted personnel relay</p>
+            <h1>Access the N7 Network of Agents</h1>
+            <p>Alliance personnel relay detected. Waiting for a ghost relay to bridge this terminal into the N7 personnel index.</p>
+            <div class="fake-form" aria-hidden="true">
+              <div class="fake-row">
+                <span>Agent Login</span>
+                <div class="fake-input" id="agentField"><span class="fake-placeholder" id="agentValue"></span><i class="cursor"></i></div>
+              </div>
+              <div class="fake-row">
+                <span>Cipher Key</span>
+                <div class="fake-input" id="keyField"><span class="fake-placeholder" id="keyValue"></span><i class="cursor"></i></div>
+              </div>
+            </div>
+            <div class="login-status" id="loginStatus">Awaiting secure relay handshake</div>
+            <div class="login-readout">
+              <div class="context-row"><span>Route</span><strong>N7 Personnel Index</strong></div>
+              <div class="context-row"><span>Terminal</span><strong>External Console / Unregistered</strong></div>
+              <div class="context-row"><span>Clearance</span><strong>Pending</strong></div>
+            </div>
+          </div>
+          <div class="login-visual" aria-hidden="true">
+            <div class="n7-ring"></div>
+            <div class="n7-mark"><span>N7</span><i></i></div>
+            <div class="login-sweep"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hack-window cut-panel" id="hackWindow" aria-live="polite">
+        <div class="hack-head">
+          <p class="eyebrow">Ghost relay / infiltration log</p>
+          <div class="auth-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+        </div>
+        <div class="hack-log" id="hackLog"></div>
+        <div class="auth-progress">
+          <div class="auth-progress-bar"><span id="hackProgressBar"></span></div>
+          <div class="auth-progress-meta"><span id="hackProgressStatus">Ghost relay idle</span><strong id="hackProgressPercent">00%</strong></div>
+        </div>
+      </div>
+
+      <div class="intro-controls">
+        <button class="link-btn" id="skipIntro" type="button">Skip intro</button>
+      </div>
+    </div>
+  </div>
+
+  <button class="audio-fallback is-hidden" id="audioFallback" type="button">Route soundtrack</button>
+
+  <audio id="ambientAudio" preload="auto" autoplay loop>
+    <source src="assets/audio/n7-network-loop.mp3" type="audio/mpeg" />
+  </audio>
+
+  <div class="app is-hidden" id="app">
+    <header class="topbar cut-panel">
+      <div>
+        <p class="eyebrow">Alliance Personnel Network</p>
+        <div class="topbar__title">
+          <strong>N7 Personnel Index / Hayden Lane</strong>
+          <span class="muted">Software Engineer / systems, workflows, cloud, and full-stack delivery</span>
+        </div>
+      </div>
+      <div class="topbar__tool">
+        <button class="audio-pill" id="audioToggle" type="button" aria-pressed="false">
+          <span class="audio-pill__dot" aria-hidden="true"></span>
+          <span><small>Galaxy Map Audio</small><strong id="audioToggleText">On</strong></span>
+        </button>
+      </div>
+      <div class="topbar__status"><span class="status-dot"></span><span id="topbarStatus">Command Deck active</span></div>
+      <div class="topbar__clock" id="clockReadout"></div>
+    </header>
+
+    <div class="layout">
+      <aside class="nav-shell cut-panel" aria-label="Primary navigation">
+        <div class="nav-title">
+          <div class="brand-glyph" aria-hidden="true"></div>
+          <div>
+            <p class="eyebrow">Navigation</p>
+            <strong>Review Sections</strong>
+          </div>
+        </div>
+        <nav class="nav-list" id="navButtons"></nav>
+        <div class="nav-actions">
+          <a class="link-btn" id="resumeLink" href="#" target="_blank" rel="noreferrer">Open Resume</a>
+          <a class="link-btn btn--ghost" id="contactLink" href="#">Transmit Message</a>
+        </div>
+      </aside>
+
+      <main class="viewport" id="stage" tabindex="-1">
+        <section class="section is-active" id="section-command"></section>
+        <section class="section" id="section-dossiers"></section>
+        <section class="section" id="section-service"></section>
+        <section class="section" id="section-systems"></section>
+        <section class="section" id="section-codex"></section>
+        <section class="section" id="section-comms"></section>
+      </main>
+
+      <aside class="sidebar" aria-label="Context and archive">
+        <section class="cut-panel" id="contextPanel"></section>
+        <section class="cut-panel" id="previewPanel"></section>
+        <section class="cut-panel" id="archivePanel"></section>
+      </aside>
+    </div>
+
+    <nav class="mobile-dock" id="mobileDock" aria-label="Mobile section navigation"></nav>
+  </div>
+
+  <script>
+    const PORTFOLIO = {
+      identity: {
+        name: 'Hayden Lane',
+        title: 'Software Engineer',
+        location: 'Houston, Texas',
+        email: 'hayne.lane92@gmail.com',
+        github: 'https://github.com/HaydenL92',
+        linkedin: 'https://www.linkedin.com/in/hayden-lane',
+        resume: 'assets/resume/Hayden_Lane_Resume_Chevron.pdf',
+        headline: 'Full-stack, backend, cloud, and systems-oriented software engineering work.',
+        mission: 'I build secure internal tools, workflow-driven web applications, backend APIs, and cloud-backed data systems with a bias toward reliability, usability, and clear operational logic.',
+        availability: 'Available for assignment across full-stack, backend, internal systems, cloud, and platform-adjacent engineering teams.',
+      },
+      stats: [
+        { label: 'Primary Focus', value: 'Full-Stack + Cloud' },
+        { label: 'Flagship Build', value: 'TOPS Timesheet Portal' },
+        { label: 'Best Public Repo', value: 'Diabetic Meal Planner API' },
+        { label: 'Location', value: 'Houston, TX' },
+      ],
+      sections: [
+        { id: 'command', code: '01', label: 'Command', title: 'Command Deck', summary: 'Primary personnel readout and rapid review route.', archiveTitle: 'Relay board' },
+        { id: 'dossiers', code: '02', label: 'Dossiers', title: 'Mission Dossiers', summary: 'Priority builds opened as mission files.', archiveTitle: 'Operations archive' },
+        { id: 'service', code: '03', label: 'Service', title: 'Service Record', summary: 'Service history, education, and operating context.', archiveTitle: 'Campaign ledger' },
+        { id: 'systems', code: '04', label: 'Systems', title: 'Systems Profile', summary: 'Capability groups, toolchains, and assignment fit.', archiveTitle: 'Systems relay' },
+        { id: 'codex', code: '05', label: 'Codex', title: 'Codex Packet', summary: 'Verified record packet and condensed service profile.', archiveTitle: 'Codex archive' },
+        { id: 'comms', code: '06', label: 'Comms', title: 'Comms Link', summary: 'Clear contact and follow-up routes.', archiveTitle: 'Transmission grid' },
+      ],
+      roles: ['Software Engineer', 'Full-Stack Engineer', 'Backend Engineer', 'Internal Tools Engineer', 'Cloud / Platform Engineer'],
+      archive: {
+        command: {
+          title: 'Relay board',
+          summary: 'Live routes into the personnel review network.',
+          hotNodes: ['Sol', 'Arcturus', 'Citadel'],
+          feed: [
+            ['SOL', 'Local terminal ghosted / carrier clean'],
+            ['ARCTURUS', 'Personnel route pinned / review deck hot'],
+            ['CITADEL', 'Candidate dossier intake stable'],
+          ],
+        },
+        dossiers: {
+          title: 'Operations archive',
+          summary: 'Priority build records pulled into mission-space.',
+          hotNodes: ['Omega', 'Illium', 'Citadel'],
+          feed: [
+            ['OMEGA', 'Workflow build archive / active dossier relay'],
+            ['ILLIUM', 'Public API record / schema verified'],
+            ['CITADEL', 'Review queue / intake stable'],
+          ],
+        },
+        service: {
+          title: 'Campaign ledger',
+          summary: 'Field operations context behind the engineering work.',
+          hotNodes: ['Horizon', 'Tuchanka', 'Sol'],
+          feed: [
+            ['HORIZON', 'Operational constraints translated into software'],
+            ['TUCHANKA', 'High-pressure execution / practical reliability'],
+            ['SOL', 'University and production experience indexed'],
+          ],
+        },
+        systems: {
+          title: 'Systems relay',
+          summary: 'Capability groups mapped onto current assignments.',
+          hotNodes: ['Noveria', 'Omega', 'Illium'],
+          feed: [
+            ['NOVERIA', 'APIs, auth, and database layers stable'],
+            ['OMEGA', 'Cloud ingestion / validation / logging online'],
+            ['ILLIUM', 'UI + workflow nodes linked'],
+          ],
+        },
+        codex: {
+          title: 'Codex archive',
+          summary: 'Verified record path with summary and download routes.',
+          hotNodes: ['Citadel', 'Illium', 'Sol'],
+          feed: [
+            ['CITADEL', 'Resume packet mounted / human-readable'],
+            ['ILLIUM', 'Profile summary cached'],
+            ['SOL', 'Download route verified'],
+          ],
+        },
+        comms: {
+          title: 'Transmission grid',
+          summary: 'Preferred channels for follow-up and verification.',
+          hotNodes: ['Citadel', 'Omega', 'Arcturus'],
+          feed: [
+            ['CITADEL', 'Email route / priority'],
+            ['OMEGA', 'GitHub packet / public repos live'],
+            ['ARCTURUS', 'LinkedIn profile / professional channel ready'],
+          ],
+        },
+      },
+      relayMap: {
+        nodes: [
+          { label: 'Sol', x: 54, y: 138 },
+          { label: 'Arcturus', x: 108, y: 88 },
+          { label: 'Citadel', x: 174, y: 56 },
+          { label: 'Omega', x: 292, y: 116 },
+          { label: 'Illium', x: 234, y: 152 },
+          { label: 'Horizon', x: 84, y: 34 },
+          { label: 'Tuchanka', x: 314, y: 48 },
+          { label: 'Noveria', x: 214, y: 22 },
+        ],
+        links: [
+          [54,138,108,88],
+          [108,88,174,56],
+          [174,56,214,22],
+          [174,56,292,116],
+          [292,116,234,152],
+          [108,88,84,34],
+          [214,22,314,48],
+          [174,56,234,152],
+          [108,88,234,152],
+        ],
+      },
+      projects: [
+        {
+          id: 'tops',
+          name: 'TOPS Timesheet Portal',
+          kicker: 'Flagship case file',
+          classification: 'Private production system',
+          status: 'Operational',
+          year: '2025 - Present',
+          role: 'Full-Stack Software Engineer / Contract',
+          description: 'Production web portal for foremen, admins, and customers with daily labor + travel capture, customer review flows, and Quickbase posting.',
+          problem: 'Field-service operations needed cleaner time capture, approval routing, secure customer review, and less manual posting into Quickbase.',
+          outcome: 'Delivered a role-based system with stronger validation, auditability, and operational clarity for real-world use.',
+          metrics: ['24 Next.js pages', '15 API routes', '5 Quickbase tables', '7-day review links'],
+          stack: ['Next.js', 'TypeScript', 'REST APIs', 'Quickbase', 'Microsoft Entra ID', 'NextAuth'],
+          highlights: [
+            'Built three role-based portals for internal users and customers.',
+            'Implemented expiring customer review links without requiring customer login.',
+            'Handled idempotent Quickbase upserts and pagination-driven querying.',
+            'Added secure access control, forced sign-in, admin approval gates, and idle logout.',
+          ],
+          links: [
+            { label: 'Private case study', href: '#', disabled: true },
+          ],
+        },
+        {
+          id: 'meal',
+          name: 'Diabetic Meal Planner API',
+          kicker: 'Public backend API',
+          classification: 'Open-source repository',
+          status: 'Active build',
+          year: '2025 - Present',
+          role: 'Backend / API project',
+          description: 'FastAPI backend for diabetic meal planning with authentication, protected data, blood-glucose tracking, meal logging, and recommendation logic.',
+          problem: 'Create a modular backend that tracks diabetic health inputs while leaving room for future personalization and ML-assisted recommendations.',
+          outcome: 'Shipped a documented API foundation with JWT auth, validation, data models, and interactive docs ready for iteration.',
+          metrics: ['JWT auth', 'Per-user data isolation', 'Recommendation logic', 'Swagger + ReDoc'],
+          stack: ['Python', 'FastAPI', 'SQLAlchemy', 'Pydantic', 'JWT', 'SQLite / PostgreSQL'],
+          highlights: [
+            'Structured routes, schemas, security, and persistence into clear backend layers.',
+            'Modeled users, meals, readings, and meal logs with ORM-backed validation.',
+            'Implemented rule-based recommendations with transparent reasoning.',
+            'Exposed interactive API docs for testing and onboarding.',
+          ],
+          links: [
+            { label: 'View repository', href: 'https://github.com/HaydenL92/diabetic-meal-planner-api' },
+          ],
+        },
+        {
+          id: 'expense',
+          name: 'Serverless Expense Management System',
+          kicker: 'Cloud + data workflow',
+          classification: 'Architecture case study',
+          status: 'Complete',
+          year: '2024',
+          role: 'Cloud / data project',
+          description: 'Serverless jobs and reporting flows that ingest, validate, normalize, and analyze expense data across AWS services.',
+          problem: 'Transform raw expense inputs into analysis-ready records while keeping the system reproducible, observable, and cleanly documented.',
+          outcome: 'Completed 100+ test submissions and 3,000+ mock transactions with zero data errors plus Athena-backed reporting workflows.',
+          metrics: ['100+ test submissions', '3,000+ mock transactions', 'Zero data errors', 'Athena reporting'],
+          stack: ['AWS Lambda', 'Python', 'DynamoDB', 'S3', 'Athena'],
+          highlights: [
+            'Designed ingestion and normalization jobs with strong validation and error handling.',
+            'Debugged live data flow into DynamoDB and S3-backed pipelines.',
+            'Automated reporting over stored expense data using Athena.',
+            'Documented infrastructure and data dictionaries for reproducibility.',
+          ],
+          links: [{ label: 'Case notes pending', href: '#', disabled: true }],
+        },
+        {
+          id: 'job',
+          name: 'Job Application Tracker',
+          kicker: 'Full-stack workflow app',
+          classification: 'Active systems build',
+          status: 'In progress',
+          year: '2025',
+          role: 'Full-stack application',
+          description: 'Workflow tool for tracking applications and recruiter responses with a Next.js frontend, FastAPI backend, and PostgreSQL data model.',
+          problem: 'Turn scattered job-search details into a structured system with clearer workflow state and maintainable CRUD flows.',
+          outcome: 'Established a strong full-stack foundation for structured application tracking, workflow state, and richer analytics.',
+          metrics: ['Next.js frontend', 'FastAPI backend', 'PostgreSQL model', 'Workflow CRUD'],
+          stack: ['Next.js', 'TypeScript', 'FastAPI', 'PostgreSQL'],
+          highlights: [
+            'Designed normalized data structures for applications, companies, and recruiter tracking.',
+            'Paired frontend workflow views with backend CRUD endpoints.',
+            'Built the project to evolve into a cleaner, stronger public demo.',
+            'Designed to expand with demo-ready views, metrics, and richer workflow reporting.',
+          ],
+          links: [
+            { label: 'View repository', href: 'https://github.com/HaydenL92/job-application-tracker' },
+          ],
+        },
+      ],
+      additionalProjects: [
+        'Scheduling and Role-Based Access System (C++, MySQL)',
+        'IoT Water Monitoring Prototype (Embedded C, Python)',
+        'CalenDoc - Doctor Office Scheduling App',
+      ],
+      experience: [
+        {
+          era: '2025 - Present',
+          org: 'TOPS Field Services, LLC',
+          role: 'Full-Stack Software Engineer / Contract',
+          summary: 'Built secure internal tooling for field-service timesheets, approvals, customer review flows, and Quickbase posting.',
+          bullets: [
+            'Translated real field-service requirements into production-ready web features.',
+            'Worked across auth, integrations, validation, and workflow logic.',
+            'Balanced usability for foremen, admins, and customers with operational auditability.',
+          ],
+        },
+        {
+          era: '2023 - Present',
+          org: 'H-E-B',
+          role: 'Production Representative',
+          summary: 'Led and coordinated high-volume operations while improving throughput and communication across shifts.',
+          bullets: [
+            'Coordinated 8+ associates in fast-moving production work.',
+            'Introduced KPI tracking and lightweight automation for process improvement.',
+            'Improved throughput by roughly 20% while maintaining quality.',
+          ],
+        },
+        {
+          era: '2022 - 2025',
+          org: 'University of Houston',
+          role: 'B.S. Computer Science / Minor in Mathematics',
+          summary: 'Built a foundation across software development, systems, databases, and mathematical problem solving.',
+          bullets: [
+            'Completed software, database, and systems-oriented project work.',
+            'Graduated with computer science degree and mathematics minor.',
+          ],
+        },
+        {
+          era: 'Earlier Experience',
+          org: 'Operations Background',
+          role: 'Port of Houston Authority + McKnight Trucking',
+          summary: 'Hands-on operations work that strengthened reliability, coordination, and process awareness.',
+          bullets: [
+            'Brings practical operations perspective to internal tools and workflow design.',
+            'Comfortable translating real-world constraints into software requirements.',
+          ],
+        },
+      ],
+      systems: [
+        { title: 'Languages', items: ['TypeScript', 'JavaScript', 'Python', 'SQL', 'C / C++', 'Java'] },
+        { title: 'Frameworks / UI', items: ['Next.js', 'React', 'Tailwind', 'HTML / CSS', 'Node.js'] },
+        { title: 'Backend / Data', items: ['FastAPI', 'REST APIs', 'SQLAlchemy', 'PostgreSQL', 'MySQL', 'Quickbase APIs'] },
+        { title: 'Cloud / Tooling', items: ['AWS Lambda', 'DynamoDB', 'S3', 'Athena', 'Git / GitHub', 'Linux / Docker / Postman'] },
+      ],
+      codex: {
+        summary: [
+          'Software engineer building secure internal tools, workflow automation, REST APIs, and cloud-backed applications.',
+          'Strongest production story: a role-based timesheet platform with customer review flows, enterprise auth, and Quickbase integration.',
+          'Best public backend project: Diabetic Meal Planner API, designed to grow into future ML-assisted features.',
+        ],
+        profile: [
+          'Secure internal tooling mindset',
+          'Workflow automation and validation',
+          'Cloud-backed data systems',
+          'Production-minded documentation',
+        ],
+        bullets: [
+          'Priority dossiers: TOPS, Meal Planner API, Serverless Expense System, and Job Tracker.',
+          'Aligned with full-stack, backend, internal tools, and cloud-oriented engineering teams.',
+          'Backed by both engineering execution and real operations experience.',
+        ],
+      },
+      comms: [
+        { note: 'Fastest direct route', label: 'Email', value: 'hayne.lane92@gmail.com', href: 'mailto:hayne.lane92@gmail.com?subject=Hayden%20Lane%20Portfolio%20Inquiry' },
+        { note: 'Public repositories', label: 'GitHub', value: 'github.com/HaydenL92', href: 'https://github.com/HaydenL92' },
+        { note: 'Professional profile', label: 'LinkedIn', value: 'linkedin.com/in/hayden-lane', href: 'https://www.linkedin.com/in/hayden-lane' },
+        { note: 'Search region', label: 'Location', value: 'Houston, Texas', href: null },
+      ],
+    };
+  </script>
+
+  <script>
+    (() => {
+      const data = PORTFOLIO;
+      const state = {
+        currentSection: 'command',
+        activeProject: data.projects[0].id,
+        previewProject: data.projects[0].id,
+        audioEnabled: false,
+        audioPending: true,
+        introComplete: false,
+        introStarted: false,
+        introTimers: [],
+      };
+
+      const $ = (id) => document.getElementById(id);
+      const els = {
+        authScreen: $('authScreen'),
+        loginFrame: $('loginFrame'),
+        agentValue: $('agentValue'),
+        keyValue: $('keyValue'),
+        loginStatus: $('loginStatus'),
+        hackWindow: $('hackWindow'),
+        hackLog: $('hackLog'),
+        hackProgressBar: $('hackProgressBar'),
+        hackProgressStatus: $('hackProgressStatus'),
+        hackProgressPercent: $('hackProgressPercent'),
+        skipIntro: $('skipIntro'),
+        ambientAudio: $('ambientAudio'),
+        audioFallback: $('audioFallback'),
+        routeFlash: $('routeFlash'),
+        audioToggle: $('audioToggle'),
+        audioToggleText: $('audioToggleText'),
+        app: $('app'),
+        navButtons: $('navButtons'),
+        mobileDock: $('mobileDock'),
+        resumeLink: $('resumeLink'),
+        contactLink: $('contactLink'),
+        stage: $('stage'),
+        contextPanel: $('contextPanel'),
+        previewPanel: $('previewPanel'),
+        archivePanel: $('archivePanel'),
+        topbarStatus: $('topbarStatus'),
+        clockReadout: $('clockReadout'),
+        sections: {
+          command: $('section-command'),
+          dossiers: $('section-dossiers'),
+          service: $('section-service'),
+          systems: $('section-systems'),
+          codex: $('section-codex'),
+          comms: $('section-comms'),
+        },
+      };
+
+      const sectionMap = new Map(data.sections.map((s) => [s.id, s]));
+      const projectMap = new Map(data.projects.map((p) => [p.id, p]));
+
+      const escapeHtml = (value) => String(value)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+
+      const projectLinks = (links) => links.map((link) => {
+        const cls = link.disabled ? 'mini-link is-disabled' : 'mini-link';
+        const href = link.disabled ? '#' : link.href;
+        const target = link.disabled ? '' : ' target="_blank" rel="noreferrer"';
+        return `<a class="${cls}" href="${href}"${target}>${escapeHtml(link.label)}</a>`;
+      }).join('');
+
+      function rememberTimer(id) {
+        state.introTimers.push(id);
+        return id;
+      }
+
+      function clearIntroTimers() {
+        state.introTimers.forEach((id) => {
+          window.clearTimeout(id);
+          window.clearInterval(id);
+        });
+        state.introTimers = [];
+      }
+
+      function updateAudioButton() {
+        if (!els.audioToggle || !els.audioToggleText) return;
+        const playing = !!els.ambientAudio && !els.ambientAudio.paused && !els.ambientAudio.muted;
+        els.audioToggle.classList.toggle('is-playing', playing);
+        els.audioToggle.setAttribute('aria-pressed', String(playing));
+        els.audioToggleText.textContent = playing ? 'On' : 'Off';
+        els.audioFallback?.classList.toggle('is-hidden', !state.audioPending || playing);
+      }
+
+      async function playAmbient() {
+        if (!els.ambientAudio) return false;
+        try {
+          els.ambientAudio.volume = 0.34;
+          els.ambientAudio.muted = false;
+          await els.ambientAudio.play();
+          state.audioEnabled = true;
+          state.audioPending = false;
+          updateAudioButton();
+          return true;
+        } catch (error) {
+          state.audioEnabled = false;
+          state.audioPending = true;
+          updateAudioButton();
+          return false;
+        }
+      }
+
+      function pauseAmbient(reset = false) {
+        if (!els.ambientAudio) return;
+        els.ambientAudio.pause();
+        if (reset) els.ambientAudio.currentTime = 0;
+        state.audioEnabled = false;
+        updateAudioButton();
+      }
+
+      async function toggleAmbient() {
+        if (!els.ambientAudio) return;
+        if (els.ambientAudio.paused || els.ambientAudio.muted) {
+          await playAmbient();
+        } else {
+          pauseAmbient(false);
+        }
+      }
+
+      function installAudioUnlock() {
+        const unlock = async () => {
+          if (!state.audioPending) return;
+          await playAmbient();
+        };
+        ['pointerdown', 'keydown', 'touchstart'].forEach((eventName) => {
+          window.addEventListener(eventName, unlock, { passive: true });
+        });
+        els.audioFallback?.addEventListener('click', unlock);
+      }
+
+      function pulseRoute() {
+        if (!els.routeFlash) return;
+        els.routeFlash.classList.remove('is-active');
+        void els.routeFlash.offsetWidth;
+        els.routeFlash.classList.add('is-active');
+      }
+
+      function hideAuth() {
+        els.authScreen?.classList.add('is-hidden');
+      }
+
+      function revealApp() {
+        clearIntroTimers();
+        state.introComplete = true;
+        els.app.classList.remove('is-hidden');
+        setSection(state.currentSection);
+        updateAudioButton();
+      }
+
+      function skipIntro() {
+        hideAuth();
+        pulseRoute();
+        revealApp();
+      }
+
+      function setHackProgress(progress, label) {
+        if (els.hackProgressBar) els.hackProgressBar.style.width = `${progress}%`;
+        if (els.hackProgressStatus) els.hackProgressStatus.textContent = label;
+        if (els.hackProgressPercent) els.hackProgressPercent.textContent = `${String(progress).padStart(2, '0')}%`;
+      }
+
+      function appendHackLine(text) {
+        if (!els.hackLog) return;
+        const line = document.createElement('div');
+        line.className = 'hack-line';
+        line.textContent = text;
+        els.hackLog.appendChild(line);
+        els.hackLog.scrollTop = els.hackLog.scrollHeight;
+      }
+
+      function grantLogin() {
+        els.loginFrame?.classList.add('is-granted');
+        if (els.agentValue) {
+          els.agentValue.textContent = 'HL-92 / LANE';
+          els.agentValue.style.opacity = '1';
+        }
+        if (els.keyValue) {
+          els.keyValue.textContent = '████ ████ ████';
+          els.keyValue.style.opacity = '1';
+        }
+        if (els.loginStatus) els.loginStatus.textContent = 'Access granted // candidate review node open';
+      }
+
+      async function beginIntro() {
+        if (state.introStarted || state.introComplete) return;
+        state.introStarted = true;
+        await playAmbient();
+
+        const lines = [
+          { progress: 12, status: 'Seeding ghost relay', text: 'External relay seeded // no Alliance signature detected' },
+          { progress: 24, status: 'Masking source signature', text: 'Signal origin dissolved // local trace unreliable' },
+          { progress: 39, status: 'Mirroring field credentials', text: 'N7 clearance frame copied // checksum collision accepted' },
+          { progress: 56, status: 'Mounting personnel index', text: 'Personnel directory mounted // candidate review node identified' },
+          { progress: 74, status: 'Preparing command deck', text: 'Review console warming // dossier channels routing' },
+          { progress: 92, status: 'Routing intake relay', text: 'Alliance intake path opened // pending clearance handoff' },
+          { progress: 100, status: 'Granting clearance', text: 'Handshake complete // access grant ready' },
+        ];
+
+        setHackProgress(0, 'Ghost relay idle');
+        rememberTimer(window.setTimeout(() => {
+          els.hackWindow?.classList.add('is-visible');
+          appendHackLine('Ghost relay online // console scroll attached');
+          let index = 0;
+          const tick = () => {
+            const step = lines[index];
+            if (!step) return;
+            appendHackLine(step.text);
+            setHackProgress(step.progress, step.status);
+            index += 1;
+            if (index < lines.length) {
+              rememberTimer(window.setTimeout(tick, 760));
+            } else {
+              rememberTimer(window.setTimeout(() => {
+                els.hackWindow?.classList.add('is-exit');
+                grantLogin();
+                rememberTimer(window.setTimeout(() => {
+                  hideAuth();
+                  pulseRoute();
+                  revealApp();
+                }, 1250));
+              }, 900));
+            }
+          };
+          rememberTimer(window.setTimeout(tick, 520));
+        }, 1500));
+      }
+
+      function setupAudio() {
+        updateAudioButton();
+        installAudioUnlock();
+        els.audioToggle?.addEventListener('click', () => toggleAmbient());
+        els.ambientAudio?.addEventListener('play', updateAudioButton);
+        els.ambientAudio?.addEventListener('pause', updateAudioButton);
+        els.routeFlash?.addEventListener('animationend', () => els.routeFlash.classList.remove('is-active'));
+      }
+
+      function setupShortcuts() {
+        window.addEventListener('keydown', (event) => {
+          if (!state.introComplete) {
+            if (event.key === 'Escape') {
+              event.preventDefault();
+              skipIntro();
+            }
+            if (event.key.toLowerCase() === 'm') {
+              event.preventDefault();
+              toggleAmbient();
+            }
+            return;
+          }
+
+          if (event.key.toLowerCase() === 'm') {
+            event.preventDefault();
+            toggleAmbient();
+          }
+          if (event.key.toLowerCase() === 'r') {
+            window.open(data.identity.resume, '_blank', 'noopener,noreferrer');
+          }
+          if (/^[1-6]$/.test(event.key)) {
+            const section = data.sections[Number(event.key) - 1];
+            if (section) setSection(section.id);
+          }
+        });
+      }
+
+      function bindSectionButtons(container) {
+        if (!container) return;
+        container.querySelectorAll('[data-section]').forEach((button) => {
+          button.addEventListener('click', () => setSection(button.dataset.section));
+          button.addEventListener('mouseenter', () => {
+            const section = sectionMap.get(button.dataset.section);
+            els.topbarStatus.textContent = `${section.title} / ${section.summary}`;
+          });
+          button.addEventListener('mouseleave', () => {
+            const section = sectionMap.get(state.currentSection);
+            els.topbarStatus.textContent = `${section.title} active`;
+          });
+        });
+      }
+
+      function renderNav() {
+        const navMarkup = data.sections.map((section) => `
+          <button class="nav-button ${section.id === state.currentSection ? 'is-active' : ''}" type="button" data-section="${section.id}">
+            <span class="nav-index">${escapeHtml(section.code)}</span>
+            <span>${escapeHtml(section.label)}</span>
+            <span class="nav-glyph" aria-hidden="true"></span>
+          </button>
+        `).join('');
+
+        const dockMarkup = data.sections.map((section) => `
+          <button class="mobile-dock__button ${section.id === state.currentSection ? 'is-active' : ''}" type="button" data-section="${section.id}" aria-label="Open ${escapeHtml(section.title)} section">
+            <span class="mobile-dock__index">${escapeHtml(section.code)}</span>
+            <span class="mobile-dock__label">${escapeHtml(section.label)}</span>
+          </button>
+        `).join('');
+
+        if (els.navButtons) {
+          els.navButtons.innerHTML = navMarkup;
+          bindSectionButtons(els.navButtons);
+        }
+
+        if (els.mobileDock) {
+          els.mobileDock.innerHTML = dockMarkup;
+          bindSectionButtons(els.mobileDock);
+        }
+      }
+
+      function renderCommand() {
+        const stats = data.stats.map((item) => `
+          <article class="metric">
+            <div class="label">${escapeHtml(item.label)}</div>
+            <div class="value">${escapeHtml(item.value)}</div>
+          </article>
+        `).join('');
+
+        const quickTabs = data.projects.map((project) => `
+          <button class="tab" type="button" data-go-dossier="${project.id}">${escapeHtml(project.name)}</button>
+        `).join('');
+
+        els.sections.command.innerHTML = `
+          <div class="section-shell">
+            <article class="hero cut-panel">
+              <div class="hero-grid">
+                <div class="hero-copy">
+                  <p class="eyebrow eyebrow--accent">Alliance personnel node / overview</p>
+                  <h1>${escapeHtml(data.identity.name.split(' ')[0])} <span>${escapeHtml(data.identity.name.split(' ')[1])}</span></h1>
+                  <div class="role-line">
+                    <span class="role-pill">${escapeHtml(data.identity.title)}</span>
+                    <span>${escapeHtml(data.identity.headline)}</span>
+                  </div>
+                  <p>${escapeHtml(data.identity.mission)}</p>
+                  <p>${escapeHtml(data.identity.availability)}</p>
+                  <div class="hero-actions">
+                    <button class="btn btn--primary" type="button" data-go-section="dossiers">Open Dossiers</button>
+                    <a class="link-btn" href="${data.identity.resume}" target="_blank" rel="noreferrer">Open Resume</a>
+                    <button class="link-btn btn--ghost" type="button" data-go-section="comms">Open Comms</button>
+                  </div>
+                </div>
+                <aside class="hero-side">
+                  <p class="eyebrow">Current signal</p>
+                  <div class="hero-sphere" aria-hidden="true"></div>
+                  <div class="hero-signal">
+                    <div class="signal-row"><span>Status</span><strong>Available for assignment</strong></div>
+                    <div class="signal-row"><span>Best fit</span><strong>Full-stack / Backend / Cloud</strong></div>
+                    <div class="signal-row"><span>Flagship</span><strong>TOPS Timesheet Portal</strong></div>
+                    <div class="signal-row"><span>Public anchor</span><strong>Meal Planner API</strong></div>
+                  </div>
+                </aside>
+              </div>
+            </article>
+
+            <div class="metrics-grid">${stats}</div>
+
+            <div class="split-grid">
+              <article class="inline-card">
+                <p class="eyebrow">Priority dossiers</p>
+                <h2 class="subsection-title">Featured dossiers</h2>
+                <p>Recommended review order: start with the production portal, then the public API, then the cloud-data system. That sequence gives the clearest read on range and operational depth.</p>
+                <div class="tab-row">${quickTabs}</div>
+              </article>
+              <article class="inline-card">
+                <p class="eyebrow">Rapid review route</p>
+                <h2 class="subsection-title">Three-step clearance route</h2>
+                <ul class="timeline-list">
+                  <li>Open the TOPS dossier for the strongest production record.</li>
+                  <li>Check the Meal Planner API for a public backend sample.</li>
+                  <li>Use the Codex Packet for formal record verification, then open Comms for follow-up.</li>
+                </ul>
+              </article>
+            </div>
+          </div>
+        `;
+      }
+
+      function renderProjectDetail(project) {
+        return `
+          <article class="detail-card cut-panel">
+            <div class="detail-header">
+              <div>
+                <p class="eyebrow eyebrow--accent">${escapeHtml(project.kicker)}</p>
+                <h2 class="detail-title">${escapeHtml(project.name)}</h2>
+                <p class="detail-role">${escapeHtml(project.role)} / ${escapeHtml(project.year)}</p>
+              </div>
+              <span class="pill">${escapeHtml(project.status)}</span>
+            </div>
+            <p>${escapeHtml(project.description)}</p>
+            <div class="metric-board">
+              ${project.metrics.map((metric) => `
+                <article class="metric">
+                  <div class="label">Signal</div>
+                  <div class="value">${escapeHtml(metric)}</div>
+                </article>
+              `).join('')}
+            </div>
+            <div class="detail-grid">
+              <div>
+                <p class="eyebrow">Problem</p>
+                <p>${escapeHtml(project.problem)}</p>
+                <p class="eyebrow">Outcome</p>
+                <p>${escapeHtml(project.outcome)}</p>
+                <div class="link-row">${projectLinks(project.links)}</div>
+              </div>
+              <div>
+                <p class="eyebrow">Stack</p>
+                <ul class="tag-row">${project.stack.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul>
+                <p class="eyebrow" style="margin-top:18px;">Highlights</p>
+                <ul class="simple-list">${project.highlights.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul>
+              </div>
+            </div>
+          </article>
+        `;
+      }
+
+      function renderDossiers() {
+        const activeProject = projectMap.get(state.activeProject);
+        els.sections.dossiers.innerHTML = `
+          <div class="section-shell">
+            <article class="section-header cut-panel">
+              <p class="eyebrow eyebrow--accent">02 / Mission dossiers</p>
+              <h2 class="subsection-title">Priority builds opened as mission files</h2>
+              <p>One production case file supported by public backend, cloud-data, and workflow builds.</p>
+            </article>
+            <div class="dossiers-layout">
+              <div class="dossier-list">
+                ${data.projects.map((project) => `
+                  <article class="dossier-card ${project.id === state.activeProject ? 'is-active' : ''}" tabindex="0" data-project="${project.id}">
+                    <div class="dossier-top">
+                      <div>
+                        <p class="eyebrow">${escapeHtml(project.kicker)}</p>
+                        <h3 class="dossier-name">${escapeHtml(project.name)}</h3>
+                      </div>
+                      <span class="pill">${escapeHtml(project.status)}</span>
+                    </div>
+                    <p>${escapeHtml(project.description)}</p>
+                    <ul class="tag-row">
+                      <li>${escapeHtml(project.classification)}</li>
+                      <li>${escapeHtml(project.year)}</li>
+                    </ul>
+                  </article>
+                `).join('')}
+              </div>
+              <div id="detailMount">${renderProjectDetail(activeProject)}</div>
+            </div>
+            <article class="inline-card">
+              <p class="eyebrow">Supplemental dossiers</p>
+              <h3 class="subsection-title">Extended range</h3>
+              <ul class="simple-list">${data.additionalProjects.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul>
+            </article>
+          </div>
+        `;
+
+        els.sections.dossiers.querySelectorAll('[data-project]').forEach((card) => {
+          const select = () => {
+            state.activeProject = card.dataset.project;
+            state.previewProject = card.dataset.project;
+            renderDossiers();
+            renderPreviewPanel();
+            renderArchivePanel();
+          };
+          const preview = () => {
+            state.previewProject = card.dataset.project;
+            renderPreviewPanel();
+          };
+          card.addEventListener('click', select);
+          card.addEventListener('mouseenter', preview);
+          card.addEventListener('focus', preview);
+          card.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+              event.preventDefault();
+              select();
+            }
+          });
+        });
+      }
+
+      function renderService() {
+        els.sections.service.innerHTML = `
+          <div class="section-shell">
+            <article class="section-header cut-panel">
+              <p class="eyebrow eyebrow--accent">03 / Service record</p>
+              <h2 class="subsection-title">Engineering record under real operating conditions</h2>
+              <p>The strongest signal here is not just code. It is software built with enough process awareness to survive real field and operations work.</p>
+            </article>
+            <div class="timeline-grid">
+              ${data.experience.map((item) => `
+                <article class="timeline-card cut-panel">
+                  <div class="timeline-meta">
+                    <span class="era">${escapeHtml(item.era)}</span>
+                    <span class="pill">Record</span>
+                  </div>
+                  <h3 class="panel-title">${escapeHtml(item.org)}</h3>
+                  <p class="muted">${escapeHtml(item.role)}</p>
+                  <p>${escapeHtml(item.summary)}</p>
+                  <ul class="timeline-list">${item.bullets.map((bullet) => `<li>${escapeHtml(bullet)}</li>`).join('')}</ul>
+                </article>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      function renderSystems() {
+        els.sections.systems.innerHTML = `
+          <div class="section-shell">
+            <article class="section-header cut-panel">
+              <p class="eyebrow eyebrow--accent">04 / Systems profile</p>
+              <h2 class="subsection-title">Capability groups and deployment lanes</h2>
+              <p>Toolchains and systems aligned to full-stack, backend, internal tools, cloud, and platform-adjacent engineering work.</p>
+            </article>
+            <div class="systems-grid">
+              ${data.systems.map((group) => `
+                <article class="system-card cut-panel">
+                  <p class="eyebrow">Capability group</p>
+                  <h3 class="panel-title">${escapeHtml(group.title)}</h3>
+                  <ul class="system-list">${group.items.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul>
+                </article>
+              `).join('')}
+            </div>
+            <div class="split-grid">
+              <article class="inline-card">
+                <p class="eyebrow">Open assignments</p>
+                <h3 class="subsection-title">Deployment lanes</h3>
+                <ul class="role-tags">${data.roles.map((role) => `<li>${escapeHtml(role)}</li>`).join('')}</ul>
+              </article>
+              <article class="inline-card">
+                <p class="eyebrow">Operational pattern</p>
+                <h3 class="subsection-title">Strength markers</h3>
+                <ul class="timeline-list">
+                  <li>Secure authentication and access-control design.</li>
+                  <li>Workflow routing, validation, and audit-minded logic.</li>
+                  <li>Cloud-backed data handling and reproducible reporting.</li>
+                  <li>Systems thinking shaped by real field and operations context.</li>
+                </ul>
+              </article>
+            </div>
+          </div>
+        `;
+      }
+
+      function renderCodex() {
+        els.sections.codex.innerHTML = `
+          <div class="section-shell">
+            <article class="section-header cut-panel">
+              <p class="eyebrow eyebrow--accent">05 / Codex packet</p>
+              <h2 class="subsection-title">Verified record and personnel summary</h2>
+              <p>Fast record path for background, experience, and downloadable verification materials.</p>
+            </article>
+            <div class="codex-grid">
+              <article class="resume-card cut-panel">
+                <p class="eyebrow">Service summary</p>
+                <div class="resume-headline">${escapeHtml(data.identity.title)} / ${escapeHtml(data.identity.location)}</div>
+                ${data.codex.summary.map((line) => `<p>${escapeHtml(line)}</p>`).join('')}
+                <div class="link-row">
+                  <a class="link-btn" href="${data.identity.resume}" target="_blank" rel="noreferrer">Download Resume</a>
+                  <a class="link-btn btn--ghost" href="${data.identity.linkedin}" target="_blank" rel="noreferrer">LinkedIn</a>
+                </div>
+              </article>
+              <article class="resume-card cut-panel">
+                <p class="eyebrow">Review markers</p>
+                <h3 class="panel-title">Clearance indicators</h3>
+                <ul class="tag-row">${data.codex.profile.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul>
+                <div class="divider"></div>
+                <ul class="resume-list">${data.codex.bullets.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul>
+              </article>
+            </div>
+          </div>
+        `;
+      }
+
+      function renderComms() {
+        els.sections.comms.innerHTML = `
+          <div class="section-shell">
+            <article class="section-header cut-panel">
+              <p class="eyebrow eyebrow--accent">06 / Comms link</p>
+              <h2 class="subsection-title">Direct transmission routes</h2>
+              <p>Once review is complete, follow-up stays direct: email, public code, and profile channels.</p>
+            </article>
+            <div class="comms-grid">
+              ${data.comms.map((item) => `
+                <article class="contact-card cut-panel" style="padding:18px;">
+                  <p class="eyebrow">${escapeHtml(item.note)}</p>
+                  <h3 class="panel-title">${escapeHtml(item.label)}</h3>
+                  ${item.href ? `<p><a href="${item.href}" target="_blank" rel="noreferrer">${escapeHtml(item.value)}</a></p>` : `<p>${escapeHtml(item.value)}</p>`}
+                </article>
+              `).join('')}
+            </div>
+            <article class="inline-card">
+              <p class="eyebrow">Recommended handoff</p>
+              <h3 class="subsection-title">Follow-up route</h3>
+              <p>Open the dossiers, review the TOPS case file, verify the Codex Packet, then transmit by email or LinkedIn.</p>
+              <div class="link-row">
+                <a class="link-btn" href="mailto:${data.identity.email}?subject=Hayden%20Lane%20Portfolio%20Inquiry">Send Email</a>
+                <a class="link-btn btn--ghost" href="${data.identity.linkedin}" target="_blank" rel="noreferrer">LinkedIn</a>
+              </div>
+            </article>
+          </div>
+        `;
+      }
+
+      function renderContextPanel() {
+        const section = sectionMap.get(state.currentSection);
+        els.contextPanel.innerHTML = `
+          <p class="eyebrow">Active route</p>
+          <h3 class="panel-title">${escapeHtml(section.title)}</h3>
+          <p>${escapeHtml(section.summary)}</p>
+          <div class="divider"></div>
+          <div class="context-row"><span>Section ID</span><strong>${escapeHtml(section.code)}</strong></div>
+          <div class="context-row"><span>Candidate</span><strong>${escapeHtml(data.identity.name)}</strong></div>
+          <div class="context-row"><span>Clearance</span><strong>Review</strong></div>
+          <div class="context-row"><span>Status</span><strong>Live</strong></div>
+        `;
+      }
+
+      function renderPreviewPanel() {
+        if (state.currentSection === 'command' || state.currentSection === 'dossiers') {
+          const project = projectMap.get(state.previewProject || state.activeProject);
+          els.previewPanel.innerHTML = `
+            <p class="eyebrow">Selected dossier</p>
+            <h3 class="panel-title">${escapeHtml(project.name)}</h3>
+            <p>${escapeHtml(project.outcome)}</p>
+            <ul class="tag-row">${project.metrics.slice(0, 3).map((metric) => `<li>${escapeHtml(metric)}</li>`).join('')}</ul>
+            <div class="preview-links">${projectLinks(project.links)}</div>
+          `;
+          return;
+        }
+
+        if (state.currentSection === 'service') {
+          const item = data.experience[0];
+          els.previewPanel.innerHTML = `
+            <p class="eyebrow">Current role</p>
+            <h3 class="panel-title">${escapeHtml(item.org)}</h3>
+            <p>${escapeHtml(item.summary)}</p>
+            <ul class="tag-row"><li>${escapeHtml(item.role)}</li><li>${escapeHtml(item.era)}</li></ul>
+          `;
+          return;
+        }
+
+        if (state.currentSection === 'systems') {
+          els.previewPanel.innerHTML = `
+            <p class="eyebrow">Role fit</p>
+            <h3 class="panel-title">Qualified assignments</h3>
+            <p>Aligned with full-stack, backend, internal tools, cloud, and platform-adjacent engineering work.</p>
+            <ul class="tag-row">${data.roles.slice(0, 4).map((role) => `<li>${escapeHtml(role)}</li>`).join('')}</ul>
+          `;
+          return;
+        }
+
+        if (state.currentSection === 'codex') {
+          els.previewPanel.innerHTML = `
+            <p class="eyebrow">Codex access</p>
+            <h3 class="panel-title">Verified records</h3>
+            <p>Resume packet, service summary, and public verification routes are mounted here.</p>
+            <div class="preview-links">
+              <a class="tiny-link" href="${data.identity.resume}" target="_blank" rel="noreferrer">Open Resume</a>
+              <a class="tiny-link" href="${data.identity.linkedin}" target="_blank" rel="noreferrer">LinkedIn</a>
+            </div>
+          `;
+          return;
+        }
+
+        els.previewPanel.innerHTML = `
+          <p class="eyebrow">Primary comms routes</p>
+          <h3 class="panel-title">Contact options</h3>
+          <p>Email is the primary transmission route. GitHub and LinkedIn remain linked for verification and follow-up.</p>
+          <div class="preview-links">
+            <a class="tiny-link" href="mailto:${data.identity.email}?subject=Hayden%20Lane%20Portfolio%20Inquiry">Email</a>
+            <a class="tiny-link" href="${data.identity.github}" target="_blank" rel="noreferrer">GitHub</a>
+            <a class="tiny-link" href="${data.identity.linkedin}" target="_blank" rel="noreferrer">LinkedIn</a>
+          </div>
+        `;
+      }
+
+      function renderArchivePanel() {
+        const key = state.currentSection;
+        const entry = data.archive[key];
+        const hot = new Set(entry.hotNodes);
+        const lines = data.relayMap.links.map(([x1,y1,x2,y2]) => `<line class="link" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"></line>`).join('');
+        const nodes = data.relayMap.nodes.map((node) => `
+          <g>
+            <circle class="node ${hot.has(node.label) ? 'hot' : ''}" cx="${node.x}" cy="${node.y}" r="${hot.has(node.label) ? 5.5 : 4}"></circle>
+            <text x="${node.x + 8}" y="${node.y - 8}">${escapeHtml(node.label)}</text>
+          </g>
+        `).join('');
+
+        els.archivePanel.innerHTML = `
+          <div class="relay-panel-copy">
+            <p class="eyebrow">${escapeHtml(entry.title)}</p>
+            <h3 class="panel-title">${escapeHtml(sectionMap.get(key).archiveTitle)}</h3>
+            <p>${escapeHtml(entry.summary)}</p>
+          </div>
+          <div class="relay-map-wrap">
+            <svg class="relay-map" viewBox="0 0 360 190" role="img" aria-label="Relay map">
+              <rect x="0" y="0" width="360" height="190" rx="16" fill="transparent"></rect>
+              ${lines}
+              ${nodes}
+            </svg>
+          </div>
+          <div class="relay-feed">
+            ${entry.feed.map(([code, text]) => `
+              <div class="relay-feed-item">
+                <span>${escapeHtml(code)}</span>
+                <strong>${escapeHtml(text)}</strong>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      }
+
+      function bindInlineActions() {
+        document.querySelectorAll('[data-go-section]').forEach((button) => {
+          button.addEventListener('click', () => setSection(button.dataset.goSection));
+        });
+        document.querySelectorAll('[data-go-dossier]').forEach((button) => {
+          button.addEventListener('click', () => {
+            state.activeProject = button.dataset.goDossier;
+            state.previewProject = button.dataset.goDossier;
+            renderDossiers();
+            renderPreviewPanel();
+            setSection('dossiers');
+          });
+        });
+      }
+
+      function renderAll() {
+        renderCommand();
+        renderDossiers();
+        renderService();
+        renderSystems();
+        renderCodex();
+        renderComms();
+        bindInlineActions();
+      }
+
+      function setSection(sectionId) {
+        if (!sectionMap.has(sectionId)) return;
+        const previous = state.currentSection;
+        state.currentSection = sectionId;
+        document.body.dataset.sector = sectionId;
+        Object.entries(els.sections).forEach(([id, node]) => node.classList.toggle('is-active', id === sectionId));
+        const section = sectionMap.get(sectionId);
+        els.topbarStatus.textContent = `${section.title} active`;
+        if (state.introComplete && previous !== sectionId) pulseRoute();
+        renderNav();
+        renderContextPanel();
+        renderPreviewPanel();
+        renderArchivePanel();
+        if (window.innerWidth <= 980) {
+          els.stage.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        els.stage.focus({ preventScroll: true });
+      }
+
+      function updateClock() {
+        const now = new Date();
+        els.clockReadout.textContent = new Intl.DateTimeFormat(undefined, {
+          month: 'short',
+          day: 'numeric',
+          hour: 'numeric',
+          minute: '2-digit'
+        }).format(now);
+      }
+
+      function attachMouseGlow() {
+        window.addEventListener('mousemove', (event) => {
+          const x = (event.clientX / window.innerWidth) * 100;
+          const y = (event.clientY / window.innerHeight) * 100;
+          document.documentElement.style.setProperty('--mouse-x', `${x}%`);
+          document.documentElement.style.setProperty('--mouse-y', `${y}%`);
+        });
+      }
+
+      function init() {
+        els.resumeLink.href = data.identity.resume;
+        els.contactLink.href = `mailto:${data.identity.email}?subject=Hayden%20Lane%20Portfolio%20Inquiry`;
+        renderAll();
+        renderNav();
+        renderContextPanel();
+        renderPreviewPanel();
+        renderArchivePanel();
+        updateClock();
+        window.setInterval(updateClock, 30000);
+        attachMouseGlow();
+        setupAudio();
+        setupShortcuts();
+        els.skipIntro?.addEventListener('click', skipIntro);
+        rememberTimer(window.setTimeout(beginIntro, 520));
+      }
+
+      init();
+    })();
+  </script>
+</body>
+</html>
