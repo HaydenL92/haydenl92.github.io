@@ -2559,7 +2559,7 @@
   <button class="audio-fallback is-hidden" id="audioFallback" type="button">Route soundtrack</button>
 
   <audio id="ambientAudio" preload="auto" autoplay loop>
-    <source src="assets/audio/n7-network-loop.mp3" type="audio/mpeg" />
+    <source src="n7-network-loop.mp3" type="audio/mpeg" />
   </audio>
 
   <div class="app is-hidden" id="app">
@@ -2625,7 +2625,7 @@
         email: 'hayne.lane92@gmail.com',
         github: 'https://github.com/HaydenL92',
         linkedin: 'https://www.linkedin.com/in/hayden-lane',
-        resume: 'assets/resume/Hayden_Lane_Resume_Chevron.pdf',
+        resume: 'Hayden_Lane_Resume_Chevron.pdf',
         headline: 'Full-stack, backend, cloud, and systems-oriented software engineering work.',
         mission: 'I build secure internal tools, workflow-driven web applications, backend APIs, and cloud-backed data systems with a bias toward reliability, usability, and clear operational logic.',
         availability: 'Available for assignment across full-stack, backend, internal systems, cloud, and platform-adjacent engineering teams.',
@@ -3001,11 +3001,18 @@
         try {
           els.ambientAudio.volume = 0.34;
           els.ambientAudio.muted = false;
-          await els.ambientAudio.play();
-          state.audioEnabled = true;
-          state.audioPending = false;
+          const playPromise = els.ambientAudio.play();
+          if (playPromise && typeof playPromise.then === 'function') {
+            await Promise.race([
+              playPromise,
+              new Promise((resolve) => window.setTimeout(resolve, 1600)),
+            ]);
+          }
+          const playing = !els.ambientAudio.paused && !els.ambientAudio.ended;
+          state.audioEnabled = playing;
+          state.audioPending = !playing;
           updateAudioButton();
-          return true;
+          return playing;
         } catch (error) {
           state.audioEnabled = false;
           state.audioPending = true;
@@ -3025,7 +3032,7 @@
       async function toggleAmbient() {
         if (!els.ambientAudio) return;
         if (els.ambientAudio.paused || els.ambientAudio.muted) {
-          await playAmbient();
+          void playAmbient();
         } else {
           pauseAmbient(false);
         }
@@ -3034,7 +3041,7 @@
       function installAudioUnlock() {
         const unlock = async () => {
           if (!state.audioPending) return;
-          await playAmbient();
+          void playAmbient();
         };
         ['pointerdown', 'keydown', 'touchstart'].forEach((eventName) => {
           window.addEventListener(eventName, unlock, { passive: true });
@@ -3098,7 +3105,7 @@
       async function beginIntro() {
         if (state.introStarted || state.introComplete) return;
         state.introStarted = true;
-        await playAmbient();
+        void playAmbient();
 
         const lines = [
           { progress: 12, status: 'Seeding ghost relay', text: 'External relay seeded // no Alliance signature detected' },
@@ -3145,6 +3152,7 @@
         els.audioToggle?.addEventListener('click', () => toggleAmbient());
         els.ambientAudio?.addEventListener('play', updateAudioButton);
         els.ambientAudio?.addEventListener('pause', updateAudioButton);
+        els.ambientAudio?.addEventListener('error', () => { state.audioEnabled = false; state.audioPending = true; updateAudioButton(); });
         els.routeFlash?.addEventListener('animationend', () => els.routeFlash.classList.remove('is-active'));
       }
 
